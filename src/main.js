@@ -3,6 +3,12 @@ import App from './App.vue'
 
 Vue.config.productionTip = false
 
+// Global Variables
+Vue.prototype.$api_url = "https://api.artic.edu/api/v1/"
+Vue.prototype.$iiif_url = "https://www.artic.edu/iiif/2/"
+Vue.prototype.$image_full_size = "/full/843,/0/default.jpg"
+Vue.prototype.$image_thumbnail = "/full/200,/0/default.jpg"
+
 new Vue({
   render: h => h(App),
 }).$mount('#app')
