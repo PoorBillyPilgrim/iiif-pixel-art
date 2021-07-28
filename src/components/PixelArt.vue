@@ -1,23 +1,27 @@
 <template>
-  <div id="pixelart">
-    <div class="container">
-      <b-button @click="getInfo">get info!</b-button>
-      <b-button @click="pixelate">pixelate</b-button>
-    </div>
+  <div id="pixelart" class="container columns">
+    <div class="column is-three-quarters">
       <p v-if="loading">loading...</p>
       <div v-else>
         <img :src="image" id="pixelitimg"/>
         <canvas id="pixelitcanvas"></canvas>
       </div>
+    </div>
+    <div class="container">
+      <PixelArtOptions/> 
+      <b-button @click="getInfo">get info!</b-button>
+      <b-button @click="pixelate">pixelate</b-button>
+    </div>  
   </div>
 </template>
 <script>
 import pixelit from '../vendor/pixelit.js'
+import PixelArtOptions from '@/components/PixelArtOptions.vue'
 
 export default {
   name: 'PixelArt',
   components: {
-    
+    PixelArtOptions
   },
   data() {
     return {
@@ -41,7 +45,15 @@ export default {
         });
     },
     pixelate() {
-      const px = new pixelit({scale: 50});
+      let width = document.getElementById("pixelitimg").width;
+      let height = document.getElementById("pixelitimg").height;
+      let options = {
+        maxHeight: height,
+        maxWidth: width,
+        scale: 50
+      }
+      console.log('height: ' + height, 'width: ' + width)
+      const px = new pixelit(options);
       px.draw().pixelate();
     }
   }
