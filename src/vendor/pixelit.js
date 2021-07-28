@@ -328,3 +328,5 @@ class pixelit {
 
   //end class
 }
+
+export default pixelit;
