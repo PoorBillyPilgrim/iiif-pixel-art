@@ -54,7 +54,7 @@ export default {
       }
       console.log('height: ' + height, 'width: ' + width)
       const px = new pixelit(options);
-      px.draw().pixelate();
+      px.draw().pixelate().resizeImage();
     }
   }
 }
