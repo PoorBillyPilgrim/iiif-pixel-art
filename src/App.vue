@@ -2,12 +2,15 @@
   <div id="app">
       <button @click="getInfo">get info!</button>
       <p v-if="loading">loading...</p>
-      <img v-else :src="image" />
+      <div v-else>
+        <img :src="image" id="pixelitimg"/>
+        <button @click="pixelate">pixelate</button>
+        <canvas id="pixelitcanvas"></canvas>
+      </div>
   </div>
 </template>
-
 <script>
-
+import pixelit from './vendor/pixelit.js'
 
 export default {
   name: 'App',
@@ -33,8 +36,11 @@ export default {
         })
         .finally(() => {
           this.loading = false;
-          console.log(this.image);
         });
+    },
+    pixelate() {
+      const px = new pixelit({scale: 50});
+      px.draw().pixelate();
     }
   }
 }
