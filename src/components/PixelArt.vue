@@ -1,10 +1,12 @@
 <template>
   <div id="pixelart">
-      <button @click="getInfo">get info!</button>
+    <div class="container">
+      <b-button @click="getInfo">get info!</b-button>
+      <b-button @click="pixelate">pixelate</b-button>
+    </div>
       <p v-if="loading">loading...</p>
       <div v-else>
         <img :src="image" id="pixelitimg"/>
-        <button @click="pixelate">pixelate</button>
         <canvas id="pixelitcanvas"></canvas>
       </div>
   </div>
@@ -47,5 +49,7 @@ export default {
 </script>
 
 <style>
-
+.button:focus, .button.is-focused {
+  border-color: #000;
+}
 </style>
