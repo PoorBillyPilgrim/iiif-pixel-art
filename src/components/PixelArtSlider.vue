@@ -1,6 +1,6 @@
 <template>
     <div 
-        class="img-comp-slider"
+        id="img-comp-slider"
         @mousedown="ready"
         @mouseup="finished"
         @touchstart="ready"
@@ -12,21 +12,40 @@
 <script>
 export default {
     name: 'PixelArtSlider',
+    props: {
+        loadSlider: {
+            type: Boolean
+        }
+    },
     data() {
         return {
             height: null,
-            width: null//,
-            //clicked: false
+            width: null,
+            clicked: false
         }
     },
+    watch: {
+        loadSlider: {
+            handler() {
+                if (this.loadSlider) {
+                    this.compareImages();
+                }
+            },
+            deep: true
+        }
+    },
+    /**
+     * 
+     * Image comparison slider based on https://www.w3schools.com/howto/howto_js_image_comparison.asp
+     * 
+     **/
     methods: {
         ready(event) {
             event.preventDefault();
             this.clicked = true;
-            console.log(event);
         },
-        finished(event) {
-            console.log(event)
+        finished() {
+            this.clicked = false;
         },
         move(event) {
             if (!this.clicked) return;
@@ -35,24 +54,35 @@ export default {
         getCursorPos(event) {
             let a, x = 0;
             event = event || window.event;
-            /*get the x positions of the image:*/
+            /* get the x positions of the image:*/
             a = document.getElementById("pixelitimg").getBoundingClientRect();
-            /*calculate the cursor's x coordinate, relative to the image:*/
+            /* calculate the cursor's x coordinate, relative to the image:*/
             x = event.pageX - a.left;
-            /*consider any page scrolling:*/
+            /* consider any page scrolling:*/
             x = x - window.pageXOffset;
             return x;
+        },
+        compareImages() {
+            let w, h;
+            let img = document.getElementById("pixelitimg");
+            w = img.offsetWidth;
+            h = img.offsetHeight;
+            img.style.width = (w / 2) + "px";
+
+            let slider = document.getElementById("img-comp-slider");
+            slider.style.top = (h /2) - (slider.offsetHeight / 2) + "px";
+            slider.style.left = (w / 2) - (slider.offsetWidth / 2) + "px";
         }
     }
 }
 </script>
 
 <style>
-.img-comp-slider {
+#img-comp-slider {
   position: absolute;
   z-index:9;
   cursor: ew-resize;
-  /*set the appearance of the slider:*/
+  /* set the appearance of the slider */
   width: 40px;
   height: 40px;
   background-color: #000;
