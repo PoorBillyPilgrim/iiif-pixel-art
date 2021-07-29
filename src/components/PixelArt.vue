@@ -6,9 +6,13 @@
         <div class="img-comp-img">
           <canvas id="pixelitcanvas"></canvas>
         </div>
-        <PixelArtSlider />
+        <PixelArtSlider :loadSlider="loadSlider" />
         <div class="img-comp-img img-comp-overlay">
-          <img :src="image" id="pixelitimg"/>
+          <img 
+            id="pixelitimg"
+            :src="image"
+            @load="onLoad"
+          />
         </div>
       </div>
     </div>
@@ -37,6 +41,7 @@ export default {
       api_id: 24645,
       iiif_id: null,
       loading: true,
+      loadSlider: false,
       image: null,
       isPixelated: false,
       pixelArtOptions: {
@@ -80,6 +85,9 @@ export default {
       const px = new pixelit(this.pixelArtOptions);
       px.draw().pixelate().resizeImage();
       this.isPixelated = true;
+    },
+    onLoad() {
+      this.loadSlider = true;
     }
   }
 }
