@@ -3,7 +3,7 @@
         <section>
             <b-field label="pixel size">
                 <b-slider
-                    @dragend="updatePixelSize"
+                    @input="updatePixelSize"
                     v-model="pixelSize"
                     :max="50"
                 ></b-slider>
