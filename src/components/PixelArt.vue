@@ -7,7 +7,7 @@
           <canvas id="pixelitcanvas"></canvas>
         </div>
         <PixelArtSlider :loadSlider="loadSlider" />
-        <div class="img-comp-img img-comp-overlay">
+        <div id="img-comp-overlay" class="img-comp-img">
           <img 
             id="pixelitimg"
             :src="image"
@@ -88,12 +88,16 @@ export default {
     },
     onLoad() {
       this.loadSlider = true;
+      this.pixelate();
     }
   }
 }
 </script>
 
 <style>
+img {
+  max-width: none !important;
+}
 /* Image Comparison Slider */
 .img-comp-container {
   position: relative;
@@ -109,6 +113,9 @@ export default {
 
 .img-comp-img img,
 .img-comp-img canvas {
+  /*height: 578px;
+  width: 843px;*/
+  
   display: block;
 }
 
