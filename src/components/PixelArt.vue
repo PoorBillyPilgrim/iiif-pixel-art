@@ -2,9 +2,13 @@
   <div id="pixelart" class="container columns">
     <div class="column is-three-quarters">
       <p v-if="loading">loading...</p>
-      <div v-else>
-        <img :src="image" id="pixelitimg"/>
-        <canvas id="pixelitcanvas"></canvas>
+      <div v-else class="img-comp-container">
+        <div class="img-comp-img">
+          <img :src="image" id="pixelitimg"/>
+        </div>
+        <div class="img-comp-img">
+          <canvas id="pixelitcanvas"></canvas>
+        </div>
       </div>
     </div>
     <div class="container">
@@ -81,5 +85,23 @@ export default {
 <style>
 .button:focus, .button.is-focused {
   border-color: #000;
+}
+
+/* Image Comparison Slider */
+.img-comp-container {
+  position: relative;
+  height: 578px;
+}
+
+.img-comp-img {
+  position: absolute;
+  width: auto;
+  height: auto;
+  overflow: hidden;
+}
+
+.img-comp-img img,
+.img-comp-img canvas {
+  display: block;
 }
 </style>
