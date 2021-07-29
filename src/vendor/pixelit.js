@@ -10,7 +10,7 @@ class pixelit {
     //origin of uploaded image/src img
     this.drawfrom = config.from || document.getElementById("pixelitimg");
     //hide image element
-    this.hideFromImg();
+    //this.hideFromImg();
     //range between 0 to 100
     this.scale =
       config.scale && config.scale > 0 && config.scale <= 50
