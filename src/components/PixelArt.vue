@@ -4,10 +4,10 @@
       <p v-if="loading">loading...</p>
       <div v-else class="img-comp-container">
         <div class="img-comp-img">
-          <img :src="image" id="pixelitimg"/>
-        </div>
-        <div class="img-comp-img">
           <canvas id="pixelitcanvas"></canvas>
+        </div>
+        <div class="img-comp-img img-comp-overlay">
+          <img :src="image" id="pixelitimg"/>
         </div>
       </div>
     </div>
@@ -16,7 +16,7 @@
         @updatedPixelSize="updatePixelSize"
       /> 
       <!---<b-button @click="getImage">get image!</b-button>-->
-      <b-button @click="pixelate">pixelate</b-button>
+      <b-button type="is-light" @click="pixelate">pixelate</b-button>
     </div>  
   </div>
 </template>
@@ -83,10 +83,6 @@ export default {
 </script>
 
 <style>
-.button:focus, .button.is-focused {
-  border-color: #000;
-}
-
 /* Image Comparison Slider */
 .img-comp-container {
   position: relative;
@@ -103,5 +99,17 @@ export default {
 .img-comp-img img,
 .img-comp-img canvas {
   display: block;
+}
+
+.img-comp-slider {
+  position: absolute;
+  z-index:9;
+  cursor: ew-resize;
+  /*set the appearance of the slider:*/
+  width: 40px;
+  height: 40px;
+  background-color: #000;
+  opacity: 0.7;
+  border-radius: 50%;
 }
 </style>
