@@ -185,7 +185,6 @@ class pixelit {
     document.body.appendChild(tempCanvas);
 
     //configs to pixelate
-    this.ctx.mozImageSmoothingEnabled = false;
     this.ctx.webkitImageSmoothingEnabled = false;
     this.ctx.imageSmoothingEnabled = false;
 
