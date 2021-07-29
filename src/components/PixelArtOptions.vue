@@ -6,7 +6,7 @@
                     @input="updatePixelSize"
                     v-model="pixelSize"
                     :max="50"
-                    :min="1"
+                    :min="10"
                     type="is-dark"
                 ></b-slider>
             </b-field>
