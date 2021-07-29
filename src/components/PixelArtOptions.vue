@@ -6,6 +6,8 @@
                     @input="updatePixelSize"
                     v-model="pixelSize"
                     :max="50"
+                    :min="1"
+                    type="is-dark"
                 ></b-slider>
             </b-field>
         </section>
