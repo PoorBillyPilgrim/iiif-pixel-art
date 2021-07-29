@@ -6,6 +6,7 @@
         <div class="img-comp-img">
           <canvas id="pixelitcanvas"></canvas>
         </div>
+        <PixelArtSlider />
         <div class="img-comp-img img-comp-overlay">
           <img :src="image" id="pixelitimg"/>
         </div>
@@ -23,11 +24,13 @@
 <script>
 import pixelit from '../vendor/pixelit.js'
 import PixelArtOptions from '@/components/PixelArtOptions.vue'
+import PixelArtSlider from '@/components/PixelArtSlider.vue'
 
 export default {
   name: 'PixelArt',
   components: {
-    PixelArtOptions
+    PixelArtOptions,
+    PixelArtSlider
   },
   data() {
     return {
@@ -101,15 +104,4 @@ export default {
   display: block;
 }
 
-.img-comp-slider {
-  position: absolute;
-  z-index:9;
-  cursor: ew-resize;
-  /*set the appearance of the slider:*/
-  width: 40px;
-  height: 40px;
-  background-color: #000;
-  opacity: 0.7;
-  border-radius: 50%;
-}
 </style>
