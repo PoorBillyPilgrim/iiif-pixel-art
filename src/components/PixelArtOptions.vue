@@ -3,7 +3,8 @@
         <section>
             <b-field label="pixel size">
                 <b-slider
-                    :value="25"
+                    @dragend="updatePixelSize"
+                    v-model="pixelSize"
                     :max="50"
                 ></b-slider>
             </b-field>
@@ -13,8 +14,19 @@
 
 <script>
 export default {
-    name: 'PixelArtOptions'
+    name: 'PixelArtOptions',
+    data() {
+        return {
+            pixelSize: 25
+        }
+    },
+    methods: {
+        updatePixelSize() {
+            this.$emit("updatedPixelSize", this.pixelSize);
+        }
+    }
 }
+
 </script>
 
 <style>

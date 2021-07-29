@@ -8,7 +8,9 @@
       </div>
     </div>
     <div class="container">
-      <PixelArtOptions/> 
+      <PixelArtOptions
+        @updatedPixelSize="printPx"
+      /> 
       <b-button @click="getInfo">get info!</b-button>
       <b-button @click="pixelate">pixelate</b-button>
     </div>  
@@ -32,6 +34,9 @@ export default {
     }
   },
   methods: {
+    printPx(pixelSize) {
+      console.log(pixelSize);
+    },
     getInfo() {
       this.loading = true;
       fetch(this.$api_url + "artworks/" + this.api_id)
