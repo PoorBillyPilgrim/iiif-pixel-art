@@ -9,9 +9,9 @@
     </div>
     <div class="container">
       <PixelArtOptions
-        @updatedPixelSize="printPx"
+        @updatedPixelSize="updatePixelSize"
       /> 
-      <b-button @click="getInfo">get info!</b-button>
+      <!---<b-button @click="getImage">get image!</b-button>-->
       <b-button @click="pixelate">pixelate</b-button>
     </div>  
   </div>
@@ -30,14 +30,31 @@ export default {
       api_id: 24645,
       iiif_id: null,
       loading: true,
-      image: null
+      image: null,
+      isPixelated: false,
+      pixelArtOptions: {
+        maxHeight: null,
+        maxWidth: null,
+        scale: 50
+      }
     }
   },
+  created: function() {
+      this.getImage();
+  },
   methods: {
-    printPx(pixelSize) {
-      console.log(pixelSize);
+    updatePixelSize(pixelSize) {
+      this.pixelArtOptions.scale = pixelSize;
+      if (this.isPixelated) {
+        const px = new pixelit(this.pixelArtOptions);
+        px.draw().pixelate().resizeImage();
+      }
     },
-    getInfo() {
+    setCanvasSize() {
+      this.pixelArtOptions.maxWidth = document.getElementById("pixelitimg").width;
+      this.pixelArtOptions.maxHeight = document.getElementById("pixelitimg").height;
+    },
+    getImage() {
       this.loading = true;
       fetch(this.$api_url + "artworks/" + this.api_id)
         .then(res => res.json())
@@ -50,16 +67,12 @@ export default {
         });
     },
     pixelate() {
-      let width = document.getElementById("pixelitimg").width;
-      let height = document.getElementById("pixelitimg").height;
-      let options = {
-        maxHeight: height,
-        maxWidth: width,
-        scale: 50
-      }
-      console.log('height: ' + height, 'width: ' + width)
-      const px = new pixelit(options);
+      this.setCanvasSize();
+      /*let img = document.getElementById("pixelitimg");
+      console.log('height: ' + img.height, 'width: ' + img.width)*/
+      const px = new pixelit(this.pixelArtOptions);
       px.draw().pixelate().resizeImage();
+      this.isPixelated = true;
     }
   }
 }
