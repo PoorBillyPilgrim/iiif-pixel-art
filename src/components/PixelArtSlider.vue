@@ -6,6 +6,7 @@
         @touchstart="ready"
         @touchend="finished"
         @mousemove="move"
+        @touchmove="move"
     ></div>    
 </template>
 
@@ -49,13 +50,26 @@ export default {
         },
         move(event) {
             if (!this.clicked) return;
-            console.log(this.getCursorPos(event))
+            let pos = this.getCursorPos(event);
+            if (pos < 0) pos = 0;
+            if (pos > document.getElementById("img-comp-overlay").offsetWidth) pos = document.getElementById("img-comp-overlay").offsetWidth;
+            this.slide(pos);
+        },
+        slide(x) {
+            /*resize the image:*/
+            let img;
+            img = document.getElementById("img-comp-overlay");
+            let slider;
+            slider = document.getElementById("img-comp-slider");
+            img.style.width = x + "px";
+            /*position the slider:*/
+            slider.style.left = img.offsetWidth - (slider.offsetWidth / 2) + "px";
         },
         getCursorPos(event) {
             let a, x = 0;
             event = event || window.event;
             /* get the x positions of the image:*/
-            a = document.getElementById("pixelitimg").getBoundingClientRect();
+            a = document.getElementById("img-comp-overlay").getBoundingClientRect();
             /* calculate the cursor's x coordinate, relative to the image:*/
             x = event.pageX - a.left;
             /* consider any page scrolling:*/
@@ -64,7 +78,7 @@ export default {
         },
         compareImages() {
             let w, h;
-            let img = document.getElementById("pixelitimg");
+            let img = document.getElementById("img-comp-overlay");
             w = img.offsetWidth;
             h = img.offsetHeight;
             img.style.width = (w / 2) + "px";
