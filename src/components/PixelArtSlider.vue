@@ -21,6 +21,18 @@ export default {
             clicked: false
         }
     },
+    created: function() {
+        window.addEventListener('resize', () => {
+            let w, h;
+            let img = document.getElementById("img-comp-overlay");
+            w = img.offsetWidth;
+            h = img.offsetHeight;
+            img.style.width = (w / 2) + "px";
+
+            let slider = document.getElementById("img-comp-slider");
+            this.repositionSlider(h, w, slider);
+        });
+    },
     watch: {
         loadSlider: {
             handler() {
@@ -71,7 +83,6 @@ export default {
             a = document.getElementById("img-comp-overlay").getBoundingClientRect();
             /* calculate the cursor's x coordinate, relative to the image:*/
             x = event.pageX - a.left;
-            console.log(x)
             /* consider any page scrolling:*/
             x = x - window.pageXOffset;
             return x;
@@ -84,11 +95,14 @@ export default {
             img.style.width = (w / 2) + "px";
 
             let slider = document.getElementById("img-comp-slider");
-            slider.style.top = (h /2) - (slider.offsetHeight / 2) + "px";
-            slider.style.left = (w / 2) - (slider.offsetWidth / 2) + "px";
+            this.repositionSlider(h, w, slider);
 
             window.addEventListener("mouseup", this.finished);
             window.addEventListener("touchup", this.finished);
+        },
+        repositionSlider(h, w, slider) {
+            slider.style.top = (h /2) - (slider.offsetHeight / 2) + "px";
+            slider.style.left = (w / 2) - (slider.offsetWidth / 2) + "px";
         }
     }
 }
