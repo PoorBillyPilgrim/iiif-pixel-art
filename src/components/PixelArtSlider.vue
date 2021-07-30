@@ -30,6 +30,7 @@ export default {
             handler() {
                 if (this.loadSlider) {
                     this.compareImages();
+                    this.width = document.getElementById("pixelitimg").offsetWidth;
                 }
             },
             deep: true
@@ -52,7 +53,7 @@ export default {
             if (!this.clicked) return;
             let pos = this.getCursorPos(event);
             if (pos < 0) pos = 0;
-            if (pos > document.getElementById("img-comp-overlay").offsetWidth) pos = document.getElementById("img-comp-overlay").offsetWidth;
+            if (pos > this.width) pos = this.width;
             this.slide(pos);
         },
         slide(x) {
@@ -72,6 +73,7 @@ export default {
             a = document.getElementById("img-comp-overlay").getBoundingClientRect();
             /* calculate the cursor's x coordinate, relative to the image:*/
             x = event.pageX - a.left;
+            console.log(x)
             /* consider any page scrolling:*/
             x = x - window.pageXOffset;
             return x;
