@@ -21,7 +21,7 @@
         @updatedPixelSize="updatePixelSize"
       /> 
       <!---<b-button @click="getImage">get image!</b-button>-->
-      <b-button type="is-light" @click="pixelate">pixelate</b-button>
+      <!--<b-button type="is-light" @click="pixelate">pixelate</b-button>-->
     </div>  
   </div>
 </template>
