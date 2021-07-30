@@ -2,11 +2,7 @@
     <div 
         id="img-comp-slider"
         @mousedown="ready"
-        @mouseup="finished"
         @touchstart="ready"
-        @touchend="finished"
-        @mousemove="move"
-        @touchmove="move"
     ></div>    
 </template>
 
@@ -45,6 +41,8 @@ export default {
         ready(event) {
             event.preventDefault();
             this.clicked = true;
+            window.addEventListener("mousemove", this.move);
+            window.addEventListener("touchmove", this.move);
         },
         finished() {
             this.clicked = false;
@@ -88,6 +86,9 @@ export default {
             let slider = document.getElementById("img-comp-slider");
             slider.style.top = (h /2) - (slider.offsetHeight / 2) + "px";
             slider.style.left = (w / 2) - (slider.offsetWidth / 2) + "px";
+
+            window.addEventListener("mouseup", this.finished);
+            window.addEventListener("touchup", this.finished);
         }
     }
 }
