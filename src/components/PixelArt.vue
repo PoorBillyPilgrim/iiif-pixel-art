@@ -53,6 +53,7 @@ export default {
   },
   created: function() {
       this.getImage();
+      window.addEventListener('resize', this.pixelate)
   },
   methods: {
     updatePixelSize(pixelSize) {
@@ -101,7 +102,7 @@ img {
 /* Image Comparison Slider */
 .img-comp-container {
   position: relative;
-  height: 578px;
+  height: auto;
 }
 
 .img-comp-img {
@@ -113,10 +114,22 @@ img {
 
 .img-comp-img img,
 .img-comp-img canvas {
-  /*height: 578px;
-  width: 843px;*/
+  height: auto;
+  width: 350px;
   
   display: block;
+}
+
+@media only screen and (min-device-width: 667px) {
+  .img-comp-container {
+    height: 578px;
+  }
+
+  .img-comp-img img,
+  .img-comp-img canvas {
+    height: 578px;
+    width: 843px;
+  }
 }
 
 </style>
