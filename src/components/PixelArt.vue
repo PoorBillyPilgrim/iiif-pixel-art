@@ -1,6 +1,9 @@
 <template>
-  <div id="pixelart" class="container columns">
-    <div class="column is-three-quarters">
+  <div id="pixelart" class="columns mx-6">
+    <div class="column is-two-thirds">
+      <PixelArtSearch 
+        class="search block"
+      />
       <p v-if="loading">loading...</p>
       <div v-else class="img-comp-container">
         <div class="img-comp-img">
@@ -12,13 +15,15 @@
             id="pixelitimg"
             :src="image"
             @load="onLoad"
+            crossOrigin="anonymous"
           />
         </div>
       </div>
     </div>
-    <div class="container">
+    <div class="column box mt-auto mb-3">
       <PixelArtOptions
         @updatedPixelSize="updatePixelSize"
+        @download="download"
       /> 
       <!---<b-button @click="getImage">get image!</b-button>-->
       <!--<b-button type="is-light" @click="pixelate">pixelate</b-button>-->
@@ -29,12 +34,14 @@
 import pixelit from '../vendor/pixelit.js'
 import PixelArtOptions from '@/components/PixelArtOptions.vue'
 import PixelArtSlider from '@/components/PixelArtSlider.vue'
+import PixelArtSearch from '@/components/PixelArtSearch.vue'
 
 export default {
   name: 'PixelArt',
   components: {
     PixelArtOptions,
-    PixelArtSlider
+    PixelArtSlider,
+    PixelArtSearch
   },
   data() {
     return {
@@ -43,6 +50,7 @@ export default {
       loading: true,
       loadSlider: false,
       image: null,
+      pixelImage: null,
       isPixelated: false,
       pixelArtOptions: {
         maxHeight: null,
@@ -59,9 +67,12 @@ export default {
     updatePixelSize(pixelSize) {
       this.pixelArtOptions.scale = pixelSize;
       if (this.isPixelated) {
-        const px = new pixelit(this.pixelArtOptions);
-        px.draw().pixelate().resizeImage();
+        this.pixelImage = new pixelit(this.pixelArtOptions);
+        this.pixelImage.draw().pixelate().resizeImage();
       }
+    },
+    download(event) {
+      if (event) this.pixelImage.saveImage();
     },
     setCanvasSize() {
       this.pixelArtOptions.maxWidth = document.getElementById("pixelitimg").width;
@@ -83,8 +94,8 @@ export default {
       this.setCanvasSize();
       /*let img = document.getElementById("pixelitimg");
       console.log('height: ' + img.height, 'width: ' + img.width)*/
-      const px = new pixelit(this.pixelArtOptions);
-      px.draw().pixelate().resizeImage();
+      this.pixelImage = new pixelit(this.pixelArtOptions);
+      this.pixelImage.draw().pixelate().resizeImage();
       this.isPixelated = true;
     },
     onLoad() {
@@ -96,6 +107,10 @@ export default {
 </script>
 
 <style>
+:root {
+  --w: 843px;
+}
+
 img {
   max-width: none !important;
 }
@@ -120,7 +135,11 @@ img {
   display: block;
 }
 
-@media only screen and (min-device-width: 667px) {
+@media only screen and (min-device-width: 843px) {
+  .search {
+    width: var(--w);
+  }
+  
   .img-comp-container {
     height: 578px;
   }
@@ -128,7 +147,7 @@ img {
   .img-comp-img img,
   .img-comp-img canvas {
     height: 578px;
-    width: 843px;
+    width: var(--w);
   }
 }
 
