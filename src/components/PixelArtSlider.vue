@@ -88,6 +88,7 @@ export default {
             return x;
         },
         compareImages() {
+            document.getElementById("img-comp-slider").style.visibility = "visible";
             let w, h;
             let img = document.getElementById("img-comp-overlay");
             w = img.offsetWidth;
@@ -119,5 +120,7 @@ export default {
   background-color: #000;
   opacity: 0.7;
   border-radius: 50%;
+
+  visibility: hidden;
 }
 </style>
