@@ -109,6 +109,7 @@ export default {
 <style>
 :root {
   --w: 843px;
+  --primary: #000;
 }
 
 img {
