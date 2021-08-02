@@ -1,7 +1,7 @@
 <template>
     <div id="pixelartoptions">
         <section>
-            <b-field label="pixel size">
+            <b-field label="pixel size" class="has-text-left">
                 <b-slider
                     @input="updatePixelSize"
                     v-model="pixelSize"
@@ -11,6 +11,12 @@
                 ></b-slider>
             </b-field>
         </section>
+        <b-button 
+            class="is-pulled-left" 
+            icon-right="download"
+            @click="download">
+            download
+        </b-button>
     </div>
 </template>
 
@@ -25,6 +31,9 @@ export default {
     methods: {
         updatePixelSize() {
             this.$emit("updatedPixelSize", this.pixelSize);
+        },
+        download() {
+            this.$emit("download", event)
         }
     }
 }
