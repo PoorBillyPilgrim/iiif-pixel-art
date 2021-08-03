@@ -3,7 +3,7 @@
     <NavBar class="mb-3"/>
     <Hero class="block"/>
     <PixelArt class="block"/>
-    <Gallery class="box"/>
+    <Gallery />
   </div>
 </template>
 <script>
