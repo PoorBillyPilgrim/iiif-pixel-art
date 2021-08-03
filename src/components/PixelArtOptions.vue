@@ -1,7 +1,8 @@
 <template>
-    <div id="pixelartoptions">
+    <div id="pixelartoptions" class="has-text-left">
+        <h2 class="title"><strong>Options</strong></h2>
         <section>
-            <b-field label="pixel size" class="has-text-left">
+            <b-field label="pixel size">
                 <b-slider
                     @input="updatePixelSize"
                     v-model="pixelSize"
