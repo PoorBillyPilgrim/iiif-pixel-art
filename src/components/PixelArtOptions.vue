@@ -1,6 +1,6 @@
 <template>
     <div id="pixelartoptions" class="has-text-left">
-        <h2><strong>Options</strong></h2>
+        <h2 class="title"><strong>Options</strong></h2>
         <section>
             <b-field label="pixel size">
                 <b-slider
@@ -40,7 +40,5 @@ export default {
 </script>
 
 <style>
-h2 {
-    font-size: 1.75rem;
-}
+
 </style>
