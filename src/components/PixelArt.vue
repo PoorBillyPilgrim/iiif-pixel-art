@@ -21,7 +21,10 @@
       </div>
     </div>
     <div class="pixelart-info column">
-      <div class="box"></div>
+      <PixelArtInfo 
+        :imageInfo="imageInfo"
+        :api_id="api_id"
+      />
       <PixelArtOptions
         class="box"
         @updatedPixelSize="updatePixelSize"
@@ -32,6 +35,7 @@
 </template>
 <script>
 import pixelit from '../vendor/pixelit.js'
+import PixelArtInfo from '@/components/PixelArtInfo.vue'
 import PixelArtOptions from '@/components/PixelArtOptions.vue'
 import PixelArtSlider from '@/components/PixelArtSlider.vue'
 import PixelArtSearch from '@/components/PixelArtSearch.vue'
@@ -39,6 +43,7 @@ import PixelArtSearch from '@/components/PixelArtSearch.vue'
 export default {
   name: 'PixelArt',
   components: {
+    PixelArtInfo,
     PixelArtOptions,
     PixelArtSlider,
     PixelArtSearch
@@ -50,6 +55,11 @@ export default {
       loading: true,
       loadSlider: false,
       image: null,
+      imageInfo: {
+        title: null,
+        artist: null,
+        origin: null
+      },
       pixelImage: null,
       isPixelated: false,
       pixelArtOptions: {
@@ -83,8 +93,8 @@ export default {
       fetch(this.$api_url + "artworks/" + this.api_id)
         .then(res => res.json())
         .then(data => {
-          this.iiif_id = data.data.image_id;
-          this.image = this.$iiif_url + this.iiif_id + this.$image_full_size;
+          this.setArtistInfo(data.data);
+          this.setImageInfo(data.data);
         })
         .finally(() => {
           this.loading = false;
@@ -101,6 +111,15 @@ export default {
     onLoad() {
       this.loadSlider = true;
       this.pixelate();
+    },
+    setArtistInfo(data) {
+      this.imageInfo.artist = data.artist_title;
+      this.imageInfo.title = data.title;
+      this.imageInfo.origin = data.place_of_origin;
+    },
+    setImageInfo(data) {
+      this.iiif_id = data.image_id;
+      this.image = this.$iiif_url + this.iiif_id + this.$image_full_size;
     }
   }
 }
