@@ -2,20 +2,23 @@
   <div id="app">
     <NavBar class="mb-3"/>
     <Hero class="block"/>
-    <PixelArt/>
+    <PixelArt class="block"/>
+    <Gallery class="box"/>
   </div>
 </template>
 <script>
 import NavBar from '@/components/NavBar.vue'
 import Hero from '@/components/Hero.vue'
 import PixelArt from '@/components/PixelArt.vue'
+import Gallery from '@/components/Gallery.vue'
 
 export default {
   name: 'App',
   components: {
     NavBar,
     Hero,
-    PixelArt
+    PixelArt,
+    Gallery
   }
 }
 </script>
