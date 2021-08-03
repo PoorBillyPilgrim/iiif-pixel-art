@@ -1,5 +1,5 @@
 <template>
-    <b-navbar :spaced="false" :shadow="true">
+    <b-navbar :shadow="true">
         <template #brand>
             <b-navbar-item>
                 <img src="../assets/brand-2.png" alt="pixelated thumbnail of The Great Wave" width="75">
