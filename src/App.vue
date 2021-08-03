@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <NavBar class="mb-3"/>
-    <Hero />
+    <Hero class="block"/>
     <PixelArt/>
   </div>
 </template>
