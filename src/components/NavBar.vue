@@ -5,23 +5,19 @@
                 <img src="../assets/brand-2.png" alt="pixelated thumbnail of The Great Wave" width="75">
             </b-navbar-item>
         </template>
-        <template #start>
+
+        <template #end>
             <b-navbar-item href="#">
                 About
             </b-navbar-item>
-        </template>
-
-        <template #end>
-            <b-navbar-item tag="a">
-                AIC Public API
+            <b-navbar-item tag="a" href="http://api.artic.edu/docs/" target="_blank">
+                AIC Public API <b-icon class="ml-1" icon="open-in-new" size="is-small"></b-icon>
             </b-navbar-item>
-            <b-navbar-item tag="a">
-                <a href="https://github.com/PoorBillyPilgrim/iiif-pixel-art" target="_blank">
-                    <b-icon
+            <b-navbar-item tag="a" href="https://github.com/PoorBillyPilgrim/iiif-pixel-art" target="_blank">
+                <b-icon
                     icon="github"
                     size="is-medium">
-                    </b-icon>
-                </a>
+                </b-icon>
             </b-navbar-item>
         </template>
     </b-navbar>
