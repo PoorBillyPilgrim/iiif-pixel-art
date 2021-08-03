@@ -1,6 +1,6 @@
 <template>
     <div id="pixelartoptions" class="has-text-left">
-        <h2 class="title"><strong>Options</strong></h2>
+        <h2><strong>Options</strong></h2>
         <section>
             <b-field label="pixel size">
                 <b-slider
@@ -12,8 +12,7 @@
                 ></b-slider>
             </b-field>
         </section>
-        <b-button 
-            class="is-pulled-left" 
+        <b-button  
             icon-right="download"
             @click="download">
             download
@@ -38,8 +37,10 @@ export default {
         }
     }
 }
-
 </script>
 
 <style>
+h2 {
+    font-size: 1.75rem;
+}
 </style>
