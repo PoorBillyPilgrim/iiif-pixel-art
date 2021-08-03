@@ -1,5 +1,5 @@
 <template>
-  <div id="pixelart" class="columns mx-6">
+  <div id="pixelart" class="columns">
     <div class="column is-two-thirds">
       <PixelArtSearch 
         class="search block"
@@ -20,13 +20,13 @@
         </div>
       </div>
     </div>
-    <div class="column box mt-auto mb-3">
+    <div class="pixelart-info column">
+      <div class="box"></div>
       <PixelArtOptions
+        class="box"
         @updatedPixelSize="updatePixelSize"
         @download="download"
       /> 
-      <!---<b-button @click="getImage">get image!</b-button>-->
-      <!--<b-button type="is-light" @click="pixelate">pixelate</b-button>-->
     </div>  
   </div>
 </template>
@@ -112,6 +112,14 @@ export default {
   --primary: #000;
 }
 
+#pixelart {
+  margin: 0 0.25rem;
+}
+
+.pixelart-info {
+  margin-top: 245px;
+}
+
 img {
   max-width: none !important;
 }
@@ -136,7 +144,15 @@ img {
   display: block;
 }
 
-@media only screen and (min-device-width: 843px) {
+@media only screen and (min-device-width: 678px) {
+  #pixelart {
+    margin: 0 3rem;
+  }
+
+  .pixelart-info {
+    margin-top: auto;
+  }
+  
   .search {
     width: var(--w);
   }
