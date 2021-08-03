@@ -1,8 +1,39 @@
 <template>
-    <div class="gallery">
-        <h2 class="title">Gallery</h2>
-        <div class="gallery-images">
-            <b-button @click="getGalleryImages">get images</b-button>
+    <div class="gallery columns">
+        <div class="column">
+            <div class="">
+                <h2 class="title">Gallery</h2>
+                <div class="gallery-images">
+                    <b-button @click="getGalleryImages">get images</b-button>
+                </div>
+                <div class="columns">
+                    <div class="column">
+                        <figure class="image">
+                            <img src="https://bulma.io/images/placeholders/128x128.png">
+                        </figure>
+                    </div>
+                    <div class="column">
+                        <figure class="image">
+                            <img src="https://bulma.io/images/placeholders/128x128.png">
+                        </figure>
+                    </div>
+                    <div class="column">
+                        <figure class="image">
+                            <img src="https://bulma.io/images/placeholders/128x128.png">
+                        </figure>
+                    </div>
+                    <div class="column">
+                        <figure class="image">
+                            <img src="https://bulma.io/images/placeholders/128x128.png">
+                        </figure>
+                    </div>
+                    <div class="column">
+                        <figure class="image">
+                            <img src="https://bulma.io/images/placeholders/128x128.png">
+                        </figure>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -25,6 +56,18 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.column {
+    margin: 0 auto;
+}
 
+.gallery {
+    margin: 0 0.25rem !important;
+}
+
+@media only screen and (min-device-width: 678px) {
+    .gallery {
+        margin: 0 3rem !important;
+    }
+}
 </style>
