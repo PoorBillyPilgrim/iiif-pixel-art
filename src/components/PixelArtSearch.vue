@@ -1,6 +1,6 @@
 <template>
     <section>
-        <p class="has-text-left mb-1">The Art Institute of Chicago Collection</p>
+        <p class="has-text-left mb-1">Search the Collection</p>
         <b-field>
             <b-autocomplete
                 placeholder="Search by keyword, artist, or reference"
