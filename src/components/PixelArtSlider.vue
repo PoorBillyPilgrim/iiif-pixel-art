@@ -23,6 +23,7 @@ export default {
     },
     created: function() {
         window.addEventListener('resize', () => {
+            this.width = document.getElementById("pixelitimg").offsetWidth;
             let w, h;
             let img = document.getElementById("img-comp-overlay");
             w = img.offsetWidth;
