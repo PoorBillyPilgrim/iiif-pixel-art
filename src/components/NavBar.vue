@@ -1,18 +1,21 @@
 <template>
-    <b-navbar spaced="true" shadow="true">
+    <b-navbar :spaced="false" :shadow="true">
         <template #brand>
             <b-navbar-item>
-                <img class="is-rounded" src="../assets/brand.png" alt="" width="100" height="100">
+                <img src="../assets/brand-2.png" alt="pixelated thumbnail of The Great Wave" width="75">
             </b-navbar-item>
         </template>
         <template #start>
             <b-navbar-item href="#">
-                about
+                About
             </b-navbar-item>
         </template>
 
         <template #end>
-            <b-navbar-item tag="div">
+            <b-navbar-item tag="a">
+                AIC Public API
+            </b-navbar-item>
+            <b-navbar-item tag="a">
                 <a href="https://github.com/PoorBillyPilgrim/iiif-pixel-art" target="_blank">
                     <b-icon
                     icon="github"
@@ -35,11 +38,8 @@ a {
     color: var(--primary) !important;
 }
 
-a:hover {
-    opacity: 0.8 !important;
-}
-
 .navbar-item img {
     max-height: none !important;
+    border-radius: 100%;
 }
 </style>
