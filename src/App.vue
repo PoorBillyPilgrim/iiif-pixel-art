@@ -1,17 +1,20 @@
 <template>
   <div id="app">
     <NavBar class="mb-3"/>
+    <Hero />
     <PixelArt/>
   </div>
 </template>
 <script>
 import NavBar from '@/components/NavBar.vue'
+import Hero from '@/components/Hero.vue'
 import PixelArt from '@/components/PixelArt.vue'
 
 export default {
   name: 'App',
   components: {
     NavBar,
+    Hero,
     PixelArt
   }
 }
@@ -26,7 +29,6 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: var(--primary);
 }
 </style>
