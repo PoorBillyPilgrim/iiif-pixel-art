@@ -100,7 +100,7 @@ export default {
             this.repositionSlider(h, w, slider);
 
             window.addEventListener("mouseup", this.finished);
-            window.addEventListener("touchup", this.finished);
+            window.addEventListener("touchend", this.finished);
         },
         repositionSlider(h, w, slider) {
             slider.style.top = (h /2) - (slider.offsetHeight / 2) + "px";
