@@ -4,33 +4,22 @@
             <div class="">
                 <h2 class="title">Gallery</h2>
                 <div class="gallery-images">
-                    <b-button @click="getGalleryImages">get images</b-button>
+                    <b-button @click="getNewPage">new images</b-button>
                 </div>
-                <div class="columns">
-                    <div class="column">
+                <div v-if="isLoading" class="columns">
+                    <div v-for="n in 5" :key="n" class="column">
                         <figure class="image">
                             <img src="https://bulma.io/images/placeholders/128x128.png">
                         </figure>
+                        <p>loading...</p>
                     </div>
-                    <div class="column">
+                </div>
+                <div v-else class="columns">
+                    <div v-for="image in images" :key="image.data.id" class="column">
                         <figure class="image">
-                            <img src="https://bulma.io/images/placeholders/128x128.png">
+                            <img :src="thumbnail(image)" :alt="image.data.thumbnail.alt_text">
                         </figure>
-                    </div>
-                    <div class="column">
-                        <figure class="image">
-                            <img src="https://bulma.io/images/placeholders/128x128.png">
-                        </figure>
-                    </div>
-                    <div class="column">
-                        <figure class="image">
-                            <img src="https://bulma.io/images/placeholders/128x128.png">
-                        </figure>
-                    </div>
-                    <div class="column">
-                        <figure class="image">
-                            <img src="https://bulma.io/images/placeholders/128x128.png">
-                        </figure>
+                        <p>{{image.data.title}}</p>
                     </div>
                 </div>
             </div>
@@ -43,14 +32,37 @@ export default {
     name: 'Gallery',
     data() {
         return {
-            page: 1
+            isLoading: true,
+            page: 1,
+            images: []
         }
     },
+    created: function() {
+        this.setGalleryImages();
+    },
     methods: {
-        getGalleryImages() {
-            fetch(this.$api_url + "artworks/search?query[term][is_public_domain]=true&limit=5&page=" + this.page)
-                .then(res => res.json())
-                .then(data => console.log(data.data))
+        async setGalleryImages() {
+            let results = await this.getSearchResults(); 
+            for (let i = 0; i < results.data.length; i++) {
+                let res = await fetch(results.data[i].api_link);
+                let artwork = await res.json();
+                this.images.push(artwork);
+            }
+            this.isLoading = false;
+        },
+        async getSearchResults() {
+            this.isLoading = true;
+            let response = await fetch(this.$api_url + "artworks/search?query[term][is_public_domain]=true&limit=5&page=" + this.page);
+            let results = await response.json();
+            return results;
+        },
+        getNewPage() {
+            this.page++;
+            this.images = [];
+            this.setGalleryImages();
+        },
+        thumbnail(image) {
+            return image.config.iiif_url + '/' + image.data.image_id + this.$image_thumbnail
         }
     }
 }
