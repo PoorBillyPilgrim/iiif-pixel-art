@@ -3,8 +3,13 @@
         <div class="column">
             <div class="">
                 <h2 class="title">Gallery</h2>
-                <div class="gallery-images">
-                    <b-button @click="getNewPage">new images</b-button>
+                <h3 class="subtitle">Try a different image from the collection</h3>
+                <div class="level">
+                    <div class="level-left"></div>
+                    <div class="level-right">
+                        <b-button v-if="page > 1" @click="prev" class="level-item">previous</b-button>
+                        <b-button @click="next" class="level-item">next</b-button>
+                    </div>
                 </div>
                 <div v-if="isLoading" class="columns">
                     <div v-for="n in 5" :key="n" class="column">
@@ -56,8 +61,14 @@ export default {
             let results = await response.json();
             return results;
         },
-        getNewPage() {
+        next() {
             this.page++;
+            this.images = [];
+            this.setGalleryImages();
+        },
+        prev() {
+            if (this.page == 1) return;
+            this.page--;
             this.images = [];
             this.setGalleryImages();
         },
