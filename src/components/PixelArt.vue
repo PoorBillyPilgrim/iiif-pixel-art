@@ -75,8 +75,10 @@ export default {
   },
   mounted: function() {
     this.$root.$on('gallery-click', image => {
+      this.loadSlider = false;
       this.image.api_id = image.data.id;
-      this.image.iiif_id = image.data.image_id;
+      this.getImage();
+      //this.pixelate();
     })
   },
   methods: {
