@@ -13,7 +13,7 @@
         <div id="img-comp-overlay" class="img-comp-img">
           <img 
             id="pixelitimg"
-            :src="image"
+            :src="image.url"
             @load="onLoad"
             crossOrigin="anonymous"
           />
@@ -22,8 +22,8 @@
     </div>
     <div class="pixelart-info column">
       <PixelArtInfo 
-        :imageInfo="imageInfo"
-        :api_id="api_id"
+        :imageInfo="image"
+        :api_id="image.api_id"
       />
       <PixelArtOptions
         class="box"
@@ -50,12 +50,12 @@ export default {
   },
   data() {
     return {
-      api_id: 24645,
-      iiif_id: null,
       loading: true,
       loadSlider: false,
-      image: null,
-      imageInfo: {
+      image: {
+        api_id: 24645,
+        iiif_id: null,
+        url: null,
         title: null,
         artist: null,
         origin: null
@@ -72,6 +72,12 @@ export default {
   created: function() {
       this.getImage();
       window.addEventListener('resize', this.pixelate)
+  },
+  mounted: function() {
+    this.$root.$on('gallery-click', image => {
+      this.image.api_id = image.data.id;
+      this.image.iiif_id = image.data.image_id;
+    })
   },
   methods: {
     updatePixelSize(pixelSize) {
@@ -90,7 +96,7 @@ export default {
     },
     getImage() {
       this.loading = true;
-      fetch(this.$api_url + "artworks/" + this.api_id)
+      fetch(this.$api_url + "artworks/" + this.image.api_id)
         .then(res => res.json())
         .then(data => {
           this.setArtistInfo(data.data);
@@ -113,13 +119,13 @@ export default {
       this.pixelate();
     },
     setArtistInfo(data) {
-      this.imageInfo.artist = data.artist_title;
-      this.imageInfo.title = data.title;
-      this.imageInfo.origin = data.place_of_origin;
+      this.image.artist = data.artist_title;
+      this.image.title = data.title;
+      this.image.origin = data.place_of_origin;
     },
     setImageInfo(data) {
-      this.iiif_id = data.image_id;
-      this.image = this.$iiif_url + this.iiif_id + this.$image_full_size;
+      this.image.iiif_id = data.image_id;
+      this.image.url = this.$iiif_url + this.image.iiif_id + this.$image_full_size;
     }
   }
 }
