@@ -20,9 +20,9 @@
                     </div>
                 </div>
                 <div v-else class="columns">
-                    <div v-for="image in images" :key="image.data.id" class="column">
+                    <div v-for="(image, index) in images" :key="image.data.id" class="column">
                         <figure class="image">
-                            <img :src="thumbnail(image)" :alt="image.data.thumbnail.alt_text">
+                            <img @click="replacePixelImage(index)" :src="thumbnail(image)" :alt="image.data.thumbnail.alt_text">
                         </figure>
                         <p>{{image.data.title}}</p>
                     </div>
@@ -74,6 +74,9 @@ export default {
         },
         thumbnail(image) {
             return image.config.iiif_url + '/' + image.data.image_id + this.$image_thumbnail
+        },
+        replacePixelImage(index) {
+            this.$root.$emit('gallery-click', this.images[index]);
         }
     }
 }
@@ -86,6 +89,10 @@ export default {
 
 .gallery {
     margin: 0 0.25rem !important;
+}
+
+figure {
+    cursor: pointer;
 }
 
 @media only screen and (min-device-width: 678px) {
