@@ -2,7 +2,7 @@
     <div class="box">
         <h3 class="title is-4 is-spaced">{{imageInfo.title}}</h3>
         <p class="subtitle is-6">{{imageInfo.artist}}, {{imageInfo.origin}}</p>
-        <a :href="url">View at the Art Institute's website</a>
+        <a :href="url" target="_blank">View at the Art Institute's website</a>
     </div>
 </template>
 
