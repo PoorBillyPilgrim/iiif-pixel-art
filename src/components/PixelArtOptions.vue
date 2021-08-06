@@ -1,6 +1,5 @@
 <template>
     <div id="pixelartoptions" class="has-text-left">
-        <h2 class="title"><strong>Options</strong></h2>
         <section>
             <b-field label="pixel size">
                 <b-slider
