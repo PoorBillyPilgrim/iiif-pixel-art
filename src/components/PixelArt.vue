@@ -21,15 +21,15 @@
       </div>
     </div>
     <div class="pixelart-info column">
-      <PixelArtInfo 
-        :imageInfo="image"
-        :api_id="image.api_id"
-      />
       <PixelArtOptions
         class="box"
         @updatedPixelSize="updatePixelSize"
         @download="download"
       /> 
+      <PixelArtInfo 
+        :imageInfo="image"
+        :api_id="image.api_id"
+      />
     </div>  
   </div>
 </template>
