@@ -1,31 +1,30 @@
 <template>
     <div class="gallery columns">
         <div class="column">
-            <div class="">
-                <h2 class="title">Gallery</h2>
-                <h3 class="subtitle">Try a different image from the collection</h3>
-                <div class="level">
-                    <div class="level-left"></div>
-                    <div class="level-right">
-                        <b-button v-if="page > 1" @click="prev" class="level-item">previous</b-button>
-                        <b-button @click="next" class="level-item">next</b-button>
-                    </div>
+            <div class="columns is-vcentered">
+                <div class="column">
+                    <h2 class="title">Gallery</h2>
+                    <h3 class="subtitle">Try a different image from the collection</h3>
                 </div>
-                <div v-if="isLoading" class="columns">
-                    <div v-for="n in 5" :key="n" class="column">
-                        <figure class="image">
-                            <img src="https://bulma.io/images/placeholders/128x128.png">
-                        </figure>
-                        <p>loading...</p>
-                    </div>
+                <div class="column has-text-right">
+                    <b-button v-if="page > 1" @click="prev">previous</b-button>
+                    <b-button @click="next">next</b-button>
                 </div>
-                <div v-else class="columns">
-                    <div v-for="(image, index) in images" :key="image.data.id" class="column">
-                        <figure class="image">
-                            <img @click="replacePixelImage(index)" :src="thumbnail(image)" :alt="image.data.thumbnail.alt_text">
-                        </figure>
-                        <p>{{image.data.title}}</p>
-                    </div>
+            </div>
+            <div v-if="isLoading" class="columns">
+                <div v-for="n in 5" :key="n" class="column">
+                    <figure class="image">
+                        <img src="https://bulma.io/images/placeholders/128x128.png">
+                    </figure>
+                    <p>loading...</p>
+                </div>
+            </div>
+            <div v-else class="columns">
+                <div v-for="(image, index) in images" :key="image.data.id" class="column">
+                    <figure class="image">
+                        <img @click="replacePixelImage(index)" :src="thumbnail(image)" :alt="image.data.thumbnail.alt_text">
+                    </figure>
+                    <p>{{image.data.title}}</p>
                 </div>
             </div>
         </div>
