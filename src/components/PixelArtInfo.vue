@@ -1,7 +1,8 @@
 <template>
     <div class="box">
-        <h3 class="title is-4 is-spaced">{{imageInfo.title}}</h3>
-        <p class="subtitle is-6">{{imageInfo.artist}}, {{imageInfo.origin}}</p>
+        <h3 class="title is-4">{{imageInfo.title}}</h3>
+        <p class="subtitle is-6">{{imageInfo.artist}}</p>
+        <p class="subtitle is-6">{{imageInfo.origin}}</p>
         <a :href="url" target="_blank">View at the Art Institute's website</a>
     </div>
 </template>
@@ -21,4 +22,8 @@ export default {
 }
 </script>
 
-<style></style>
+<style scoped>
+.subtitle {
+    margin-top: -1.25rem;
+}
+</style>
