@@ -22,7 +22,9 @@
             <div v-else class="columns">
                 <div v-for="(image, index) in images" :key="image.data.id" class="column">
                     <figure class="image">
-                        <img @click="replacePixelImage(index)" :src="thumbnail(image)" :alt="image.data.thumbnail.alt_text">
+                        <a href="#pixelart">
+                            <img @click="replacePixelImage(index)" :src="thumbnail(image)" :alt="image.data.thumbnail.alt_text">
+                        </a>
                     </figure>
                     <p>{{image.data.title}}</p>
                 </div>
