@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div v-else class="columns">
-                <div v-for="(image, index) in images" :key="image.data.id" class="column">
+                <div v-for="(image, index) in gallery" :key="image.data.id" class="column">
                     <figure class="image">
                         <a href="#pixelart">
                             <img @click="replacePixelImage(index)" :src="thumbnail(image)" :alt="image.data.thumbnail.alt_text">
@@ -40,7 +40,7 @@ export default {
         return {
             isLoading: true,
             page: 1,
-            images: []
+            gallery: []
         }
     },
     created: function() {
@@ -48,36 +48,36 @@ export default {
     },
     methods: {
         async setGalleryImages() {
-            let results = await this.getSearchResults(); 
+            let results = await this.getSearchResults(this.page); 
             for (let i = 0; i < results.data.length; i++) {
                 let res = await fetch(results.data[i].api_link);
                 let artwork = await res.json();
-                this.images.push(artwork);
+                this.gallery.push(artwork);
             }
             this.isLoading = false;
         },
-        async getSearchResults() {
+        async getSearchResults(page) {
             this.isLoading = true;
-            let response = await fetch(this.$api_url + "artworks/search?query[term][is_public_domain]=true&limit=5&page=" + this.page);
+            let response = await fetch(this.$api_url + "artworks/search?query[term][is_public_domain]=true&limit=5&page=" + page);
             let results = await response.json();
             return results;
         },
         next() {
             this.page++;
-            this.images = [];
+            this.gallery = [];
             this.setGalleryImages();
         },
         prev() {
             if (this.page == 1) return;
             this.page--;
-            this.images = [];
+            this.gallery = [];
             this.setGalleryImages();
         },
         thumbnail(image) {
             return image.config.iiif_url + '/' + image.data.image_id + this.$image_thumbnail
         },
         replacePixelImage(index) {
-            this.$root.$emit('gallery-click', this.images[index]);
+            this.$root.$emit('gallery-click', this.gallery[index]);
         }
     }
 }
