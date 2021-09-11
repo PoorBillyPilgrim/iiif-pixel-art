@@ -45,6 +45,8 @@ export default {
     },
     created: function() {
         this.setGalleryImages();
+    },
+    mounted: function() {
         this.preloadImages();
     },
     methods: {
@@ -53,6 +55,8 @@ export default {
             for (let i = 0; i < results.data.length; i++) {
                 let res = await fetch(results.data[i].api_link);
                 let artwork = await res.json();
+                let img = new Image();
+                img.src = artwork.config.iiif_url + '/' + artwork.data.image_id + this.$image_thumbnail
                 this.gallery.push(artwork);
             }
             this.isLoading = false;
