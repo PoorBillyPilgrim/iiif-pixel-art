@@ -191,7 +191,8 @@ img {
   .img-comp-img img,
   .img-comp-img canvas {
     height: 578px;
-    width: var(--w);
+    width: auto;
+    max-width: 843px;
   }
 }
 
