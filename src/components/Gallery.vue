@@ -13,10 +13,11 @@
             </div>
             <div v-if="isLoading" class="columns">
                 <div v-for="n in 5" :key="n" class="column">
-                    <figure class="image">
+                    <b-skeleton height="128px"></b-skeleton>
+                    <!--<figure class="image">
                         <img src="https://bulma.io/images/placeholders/128x128.png">
                     </figure>
-                    <p>loading...</p>
+                    <p>loading...</p>-->
                 </div>
             </div>
             <div v-else class="columns">
