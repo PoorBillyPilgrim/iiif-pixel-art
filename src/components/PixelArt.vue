@@ -1,6 +1,6 @@
 <template>
-  <div id="pixelart" class="columns">
-    <div class="column is-two-thirds">
+  <div id="pixelart">
+    <div>
       <PixelArtSearch 
         class="search block"
       />
@@ -20,13 +20,14 @@
         </div>
       </div>
     </div>
-    <div class="pixelart-info column">
+    <div class="pixelart-info columns">
       <PixelArtOptions
-        class="box"
+        class="box column"
         @updatedPixelSize="updatePixelSize"
         @download="download"
       /> 
       <PixelArtInfo 
+        class="column"
         :imageInfo="image"
         :api_id="image.api_id"
       />
