@@ -7,6 +7,9 @@ import OpenSeadragon from 'openseadragon'
 
 export default {
     name: 'Viewer',
+    props: {
+        infoJson: String
+    },
     data() {
         return {
             viewer: null
@@ -15,15 +18,22 @@ export default {
     mounted: function() {
         this.initViewer()
     },
+    watch: {
+        infoJson: {
+            handler() {
+                this.viewer.addTiledImage({
+                    tileSource: this.infoJson
+                })
+            },
+            deep: true
+        }
+    },
     methods: {
         async initViewer() {
             //let json = await this.getInfoJson()
             this.viewer = OpenSeadragon({
                 id: 'container',
                 prefixUrl: '//openseadragon.github.io/openseadragon/images/'
-            })
-            this.viewer.addTiledImage({
-                tileSource: 'https://www.artic.edu/iiif/2/b3974542-b9b4-7568-fc4b-966738f61d78/info.json'
             })
         },
         async getInfoJson(){

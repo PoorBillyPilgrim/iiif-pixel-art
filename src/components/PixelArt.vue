@@ -4,7 +4,10 @@
       <PixelArtSearch 
         class="search block"
       />
-      <p v-if="loading">loading...</p>
+      <Viewer 
+        :infoJson="image.url"
+      />
+      <!--<p v-if="loading">loading...</p>
       <div v-else class="img-comp-container">
         <div class="img-comp-img">
           <canvas id="pixelitcanvas"></canvas>
@@ -18,7 +21,7 @@
             crossOrigin="anonymous"
           />
         </div>
-      </div>
+      </div>-->
     </div>
     <div class="pixelart-info columns">
       <PixelArtOptions
@@ -35,18 +38,22 @@
   </div>
 </template>
 <script>
+// vendors
 import pixelit from '../vendor/pixelit.js'
+// components
+import Viewer from '@/components/Viewer.vue'
 import PixelArtInfo from '@/components/PixelArtInfo.vue'
 import PixelArtOptions from '@/components/PixelArtOptions.vue'
-import PixelArtSlider from '@/components/PixelArtSlider.vue'
+//import PixelArtSlider from '@/components/PixelArtSlider.vue'
 import PixelArtSearch from '@/components/PixelArtSearch.vue'
 
 export default {
   name: 'PixelArt',
   components: {
+    Viewer,
     PixelArtInfo,
     PixelArtOptions,
-    PixelArtSlider,
+    //PixelArtSlider,
     PixelArtSearch
   },
   data() {
@@ -128,7 +135,8 @@ export default {
     },
     setImageInfo(data) {
       this.image.iiif_id = data.image_id;
-      this.image.url = this.$iiif_url + this.image.iiif_id + this.$image_full_size;
+      //this.image.url = this.$iiif_url + this.image.iiif_id + this.$image_full_size;
+      this.image.url = this.$iiif_url + this.image.iiif_id +'/info.json'
     }
   }
 }
