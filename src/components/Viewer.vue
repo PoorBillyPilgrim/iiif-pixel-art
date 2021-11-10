@@ -21,7 +21,10 @@ export default {
     watch: {
         infoJson: {
             handler() {
-                this.viewer.addTiledImage({
+                /*this.viewer.addTiledImage({
+                    tileSource: this.infoJson
+                })*/
+                this.viewer.open({
                     tileSource: this.infoJson
                 })
             },
@@ -29,17 +32,12 @@ export default {
         }
     },
     methods: {
-        async initViewer() {
-            //let json = await this.getInfoJson()
+        initViewer() {
             this.viewer = OpenSeadragon({
                 id: 'container',
                 prefixUrl: '//openseadragon.github.io/openseadragon/images/'
             })
-        },
-        async getInfoJson(){
-            let res = await fetch('https://www.artic.edu/iiif/2/b3974542-b9b4-7568-fc4b-966738f61d78/info.json');
-            let json = await res.json()
-            return json
+            console.log(this.viewer.world)
         }
     }
 }
