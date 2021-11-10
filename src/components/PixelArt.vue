@@ -178,7 +178,7 @@ img {
   }
 
   .pixelart-info {
-    margin-top: auto;
+    margin-top: 15px !important;
   }
   
   .search {
