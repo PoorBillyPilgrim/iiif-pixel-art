@@ -13,7 +13,8 @@ export default {
     data() {
         return {
             viewer: null,
-            img: null
+            canvas: null,
+            tile: null
         }
     },
     mounted: function() {
@@ -37,21 +38,26 @@ export default {
                 crossOriginPolicy: 'Anonymous'
             })
             this.addOverlay()
+            
         },
         addOverlay() {
             this.viewer.addHandler('open', (viewer) => {
             let tiledImg = this.viewer.world.getItemAt(0)
                 tiledImg.addHandler('fully-loaded-change', function() {
                     // test adding overlay by grabbing first tile available from lastDrawn array
-                    let tile = tiledImg.lastDrawn[0]
-                    let canvas = document.createElement("canvas")
+                    
+                    this.tile = tiledImg.lastDrawn[0]
+                    console.log(this.tile)
+                    let i = 0;
+                    this.canvas = document.createElement("canvas")
                     // test adding tags to overlay
-                    canvas.id = 'test'
-                    canvas.className = 'overlay'
-                    canvas.style.backgroundColor = 'blue'
+                    this.canvas.id = 'tile-' + i
+                    this.canvas.className = 'overlay'
+                    this.canvas.style.backgroundColor = 'blue'
+
                     viewer.eventSource.addOverlay({
-                        element: canvas,
-                        location: tile.bounds,
+                        element: this.canvas,
+                        location: this.tile.bounds,
                     })
                 })
             })
