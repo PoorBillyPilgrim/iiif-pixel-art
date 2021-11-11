@@ -33,7 +33,7 @@ export default {
                 ///console.log(viewer.eventSource.drawer.canvas.toDataURL())
                 let tile = tiledImg.lastDrawn[0]
                 //viewer.eventSource.addOverlay(tiledImg.lastDrawn[0])
-                let div = document.createElement("div")
+                let canvas = document.createElement("canvas")
                 //div.style.height = tile.bounds.height
                 //div.style.width = tile.bounds.width
                 /*let overlay = new OpenSeadragon.Overlay({
@@ -41,10 +41,10 @@ export default {
                     location: tile.bounds,
                     className: 'overlay'
                 })*/
-                div.id = 'test'
-                div.className = 'overlay'
+                canvas.id = 'test'
+                canvas.className = 'overlay'
                 viewer.eventSource.addOverlay({
-                    element: div,
+                    element: canvas,
                     location: tile.bounds,
                 })
             })
