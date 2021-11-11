@@ -1,5 +1,5 @@
 <template>
-    <div id="container"></div>
+    <div id="openseadragon"></div>
 </template>
 <script>
 import OpenSeadragon from 'openseadragon'
@@ -43,6 +43,7 @@ export default {
                 })*/
                 canvas.id = 'test'
                 canvas.className = 'overlay'
+                canvas.style.backgroundColor = 'blue'
                 viewer.eventSource.addOverlay({
                     element: canvas,
                     location: tile.bounds,
@@ -76,7 +77,7 @@ export default {
     methods: {
         initViewer() {
             this.viewer = OpenSeadragon({
-                id: 'container',
+                id: 'openseadragon',
                 prefixUrl: '//openseadragon.github.io/openseadragon/images/',
                 crossOriginPolicy: 'Anonymous'
             })
@@ -98,7 +99,7 @@ export default {
 }
 </script>
 <style scoped>
-    #container {
+    #openseadragon {
         height: 500px;
         width: 100%;
     }
