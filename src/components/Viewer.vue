@@ -12,33 +12,88 @@ export default {
     },
     data() {
         return {
-            viewer: null
+            viewer: null,
+            img: null
         }
     },
     mounted: function() {
         this.initViewer()
+        /*this.viewer.addHandler('animation-finish', function(event) {
+            // event.eventSource references the viewer
+            console.log(event)
+        })*/
+        //this.viewer.addHandler('tile-loaded', function(event) {
+          //  console.log(event)
+        //})
+        this.viewer.addHandler('open', (viewer) => {
+            //this.viewer.world.getItemAt(0).lastDrawn.forEach(x => console.log(x))
+            //console.log(viewer)
+            let tiledImg = this.viewer.world.getItemAt(0)
+            tiledImg.addHandler('fully-loaded-change', function() {
+                ///console.log(viewer.eventSource.drawer.canvas.toDataURL())
+                let tile = tiledImg.lastDrawn[0]
+                //viewer.eventSource.addOverlay(tiledImg.lastDrawn[0])
+                let div = document.createElement("div")
+                //div.style.height = tile.bounds.height
+                //div.style.width = tile.bounds.width
+                /*let overlay = new OpenSeadragon.Overlay({
+                    element: div,
+                    location: tile.bounds,
+                    className: 'overlay'
+                })*/
+                div.id = 'test'
+                div.className = 'overlay'
+                viewer.eventSource.addOverlay({
+                    element: div,
+                    location: tile.bounds,
+                })
+            })
+        })
+
+        
     },
     watch: {
         infoJson: {
             handler() {
-                /*this.viewer.addTiledImage({
-                    tileSource: this.infoJson
-                })*/
                 this.viewer.open({
                     tileSource: this.infoJson
                 })
             },
             deep: true
         }
+        /*viewer: {
+            handler() {
+                /*this.viewer.addHandler('tile-drawn', function() {
+                    this.img = this.viewer.drawer.canvas.toDataURL('image/png')
+                    console.log(this.img)
+                })
+                //console.log(this.viewer.world)
+                console.log('test')
+                //this.onFinish()
+            }
+        }*/
     },
     methods: {
         initViewer() {
             this.viewer = OpenSeadragon({
                 id: 'container',
-                prefixUrl: '//openseadragon.github.io/openseadragon/images/'
+                prefixUrl: '//openseadragon.github.io/openseadragon/images/',
+                crossOriginPolicy: 'Anonymous'
             })
-            console.log(this.viewer.world)
+            //this.getImg()
+        },
+        onFinish() {
+            this.viewer.addHandler('animation-finish', function() {
+                console.log(this.viewer.viewport.getBounds())
+            })
         }
+        /*,
+        getImg() {
+            this.viewer.addHandler('open', function() {
+                this.img = this.viewer.drawer.canvas.toDataURL('image/png')
+                console.log(this.img)
+            })
+        }*/
     }
 }
 </script>
@@ -50,5 +105,9 @@ export default {
 
     .openseadragon-canvas:focus {
         outline: none;
+    }
+
+    .overlay {
+        background-color: blue;
     }
 </style>
