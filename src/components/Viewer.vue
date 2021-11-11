@@ -1,8 +1,13 @@
 <template>
-    <div id="openseadragon"></div>
+    <div>
+        <div id="openseadragon"></div>
+        <b-button @click="pixelate">pixelate</b-button>
+    </div>
 </template>
 <script>
+// vendors
 import OpenSeadragon from 'openseadragon'
+import pixelit from '../vendor/pixelit.js'
 
 
 export default {
@@ -14,7 +19,14 @@ export default {
         return {
             viewer: null,
             canvas: null,
-            tiledImage: null
+            tiledImage: null,
+            pixelImage: null,
+            isPixelated: false,
+            pixelArtOptions: {
+                maxHeight: null,
+                maxWidth: null,
+                scale: 50
+            }
         }
     },
     mounted: function() {
@@ -54,6 +66,13 @@ export default {
                     location: this.tiledImage.getBounds()
                 })
             })
+        },
+        pixelate() {
+            //this.setCanvasSize();
+
+            this.pixelImage = new pixelit(this.pixelArtOptions);
+            this.pixelImage.draw().pixelate().resizeImage();
+            this.isPixelated = true;
         }
     }
 }
