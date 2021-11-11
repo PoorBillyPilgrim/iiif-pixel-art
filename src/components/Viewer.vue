@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="container">
         <div id="openseadragon"></div>
         <b-button @click="pixelate">pixelate</b-button>
     </div>
@@ -19,6 +19,7 @@ export default {
         return {
             viewer: null,
             canvas: null,
+            img: (new Image()),
             tiledImage: null,
             pixelImage: null,
             isPixelated: false,
@@ -47,7 +48,8 @@ export default {
             this.viewer = OpenSeadragon({
                 id: 'openseadragon',
                 prefixUrl: '//openseadragon.github.io/openseadragon/images/',
-                crossOriginPolicy: 'Anonymous'
+                crossOriginPolicy: 'Anonymous',
+                debugMode: true
             })
             this.addOverlay()
             
@@ -55,14 +57,44 @@ export default {
         addOverlay() {
             this.viewer.addHandler('open', (viewer) => {
                 this.tiledImage = this.viewer.world.getItemAt(0)
-                this.canvas = document.createElement("canvas")
+                let croppedImage = new Image()
+                this.tiledImage.addHandler('fully-loaded-change', () => {
+                    /*this.img.src = viewer.eventSource.drawer.canvas.toDataURL('image/png')
+                    let { height, width } = this.tiledImage.getBounds()
+                    this.img.height = height
+                    this.img.width = width*/
+                    let viewportRect = viewer.eventSource.viewport.getBounds()
+                    var rect = viewer.eventSource.viewport.viewportToViewerElementRectangle(viewportRect);
+                    const { x, y, width, height } = rect
+                    const { canvas } = viewer.eventSource.drawer;
+
+                    this.img.onload = () => {
+                        let croppedCanvas = document.createElement('canvas');
+                        let ctx = croppedCanvas.getContext('2d');
+                        croppedCanvas.width = width;
+                        croppedCanvas.height = height;
+
+                        const pixelDens = OpenSeadragon.pixelDensityRatio;
+                        ctx.drawImage(this.img, x*pixelDens, y*pixelDens, width*pixelDens, height*pixelDens, 0, 0, width, height);
+                        croppedImage.src = croppedCanvas.toDataURL(); 
+                    }
+                    this.img.src = canvas.toDataURL();
+                })
+
+        
+                //this.canvas = document.createElement("canvas")
+                //console.log(this.tiledImage)
                 // test adding tags to overlay
-                this.canvas.id = 'pixelitcanvas'
-                this.canvas.className = 'overlay'
-                this.canvas.style.backgroundColor = 'blue'
-                this.canvas.style.opacity = '0.5'
+                //this.canvas.id = 'pixelitcanvas'
+                //this.canvas.className = 'overlay'
+                //this.canvas.style.backgroundColor = 'blue'
+                //this.canvas.style.opacity = '0.5'
+                this.img.id = 'pixelitcanvas'
+                this.img.className = 'overlay'
+                this.img.style.backgroundColor = 'blue'
+                this.img.style.opacity = '0.5'
                 viewer.eventSource.addOverlay({
-                    element: this.canvas,
+                    element: croppedImage,
                     location: this.tiledImage.getBounds()
                 })
             })
