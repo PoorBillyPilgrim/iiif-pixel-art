@@ -86,7 +86,6 @@ export default {
       this.loadSlider = false;
       this.image.api_id = image.data.id;
       this.getImage();
-      //this.pixelate();
     })
   },
   methods: {
