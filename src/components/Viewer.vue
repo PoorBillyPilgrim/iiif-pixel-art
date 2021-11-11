@@ -14,7 +14,7 @@ export default {
         return {
             viewer: null,
             canvas: null,
-            tile: null
+            tiledImage: null
         }
     },
     mounted: function() {
@@ -42,23 +42,16 @@ export default {
         },
         addOverlay() {
             this.viewer.addHandler('open', (viewer) => {
-            let tiledImg = this.viewer.world.getItemAt(0)
-                tiledImg.addHandler('fully-loaded-change', function() {
-                    // test adding overlay by grabbing first tile available from lastDrawn array
-                    
-                    this.tile = tiledImg.lastDrawn[0]
-                    console.log(this.tile)
-                    let i = 0;
-                    this.canvas = document.createElement("canvas")
-                    // test adding tags to overlay
-                    this.canvas.id = 'tile-' + i
-                    this.canvas.className = 'overlay'
-                    this.canvas.style.backgroundColor = 'blue'
-
-                    viewer.eventSource.addOverlay({
-                        element: this.canvas,
-                        location: this.tile.bounds,
-                    })
+                this.tiledImage = this.viewer.world.getItemAt(0)
+                this.canvas = document.createElement("canvas")
+                // test adding tags to overlay
+                this.canvas.id = 'pixelitcanvas'
+                this.canvas.className = 'overlay'
+                this.canvas.style.backgroundColor = 'blue'
+                this.canvas.style.opacity = '0.5'
+                viewer.eventSource.addOverlay({
+                    element: this.canvas,
+                    location: this.tiledImage.getBounds()
                 })
             })
         }
