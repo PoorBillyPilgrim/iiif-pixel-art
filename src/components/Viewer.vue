@@ -103,4 +103,10 @@ export default {
     .overlay {
         background-color: blue;
     }
+
+    @media only screen and (min-device-width: 1400px) {
+        #openseadragon {
+            height: 1000px;
+        }
+    }
 </style>
