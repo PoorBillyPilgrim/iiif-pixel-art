@@ -2,7 +2,6 @@
     <div id="container">
         <div id="openseadragon"></div>
         <img id="pixelitimg" :src="urls.iiif"/>
-        <b-button @click="pixelate">pixelate</b-button>
     </div>
 </template>
 <script>
@@ -94,6 +93,8 @@ export default {
     #openseadragon {
         height: 500px;
         width: 100%;
+        border: hsl(0, 0%, 86%) solid 1px;
+        border-radius: 6px;
     }
 
     .openseadragon-canvas:focus {
