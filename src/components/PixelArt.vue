@@ -7,26 +7,10 @@
       <Viewer 
         :urls="urls"
       />
-      <!--<p v-if="loading">loading...</p>
-      <div v-else class="img-comp-container">
-        <div class="img-comp-img">
-          <canvas id="pixelitcanvas"></canvas>
-        </div>
-        <PixelArtSlider :loadSlider="loadSlider" />
-        <div id="img-comp-overlay" class="img-comp-img">
-          <img 
-            id="pixelitimg"
-            :src="image.url"
-            @load="onLoad"
-            crossOrigin="anonymous"
-          />
-        </div>
-      </div>-->
     </div>
     <div class="pixelart-info columns">
       <PixelArtOptions
         class="box column"
-        @updatedPixelSize="updatePixelSize"
         @download="download"
       /> 
       <PixelArtInfo 
@@ -98,13 +82,6 @@ export default {
     }
   },
   methods: {
-    /*updatePixelSize(pixelSize) {
-      this.pixelArtOptions.scale = pixelSize;
-      if (this.isPixelated) {
-        this.pixelImage = new pixelit(this.pixelArtOptions);
-        this.pixelImage.draw().pixelate().resizeImage();
-      }
-    },*/
     download(event) {
       if (event) this.pixelImage.saveImage();
     },
@@ -124,18 +101,6 @@ export default {
           this.loading = false;
         });
     },
-    /*pixelate() {
-      this.setCanvasSize();
-      let img = document.getElementById("pixelitimg");
-      console.log('height: ' + img.height, 'width: ' + img.width)
-      this.pixelImage = new pixelit(this.pixelArtOptions);
-      this.pixelImage.draw().pixelate().resizeImage();
-      this.isPixelated = true;
-    },*/
-    /*onLoad() {
-      this.loadSlider = true;
-      this.pixelate();
-    },*/
     setArtistInfo(data) {
       this.image.artist = data.artist_title;
       this.image.title = data.title;
