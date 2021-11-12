@@ -31,8 +31,16 @@ export default {
             }
         }
     },
-    mounted: function() {
+    mounted() {
         this.initViewer()
+        
+        this.$root.$on('updatedPixelSize', pixelSize => {
+            this.pixelArtOptions.scale = pixelSize
+            if (this.isPixelated) {
+                this.pixelImage = new pixelit(this.pixelArtOptions);
+                this.pixelImage.draw().pixelate().resizeImage();
+            }
+        })
     },
     watch: {
         urls: {
