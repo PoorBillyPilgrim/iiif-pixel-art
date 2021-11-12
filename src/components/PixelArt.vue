@@ -5,8 +5,7 @@
         class="search block"
       />
       <Viewer 
-        :infoJson="image.url"
-        :iiif_url="image.iiif_url"
+        :urls="urls"
       />
       <!--<p v-if="loading">loading...</p>
       <div v-else class="img-comp-container">
@@ -89,6 +88,14 @@ export default {
       this.image.api_id = image.data.id;
       this.getImage();
     })
+  },
+  computed: {
+    urls: function() {
+      return { 
+        iiif: this.image.iiif_url,
+        infoJson: this.image.url
+      }
+    }
   },
   methods: {
     /*updatePixelSize(pixelSize) {
