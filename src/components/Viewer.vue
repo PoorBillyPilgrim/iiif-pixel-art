@@ -1,7 +1,7 @@
 <template>
     <div id="container">
         <div id="openseadragon"></div>
-        <img id="pixelitimg" :src="iiif_url"/>
+        <img id="pixelitimg" :src="urls.iiif"/>
         <b-button @click="pixelate">pixelate</b-button>
     </div>
 </template>
@@ -14,8 +14,7 @@ import pixelit from '../vendor/pixelit.js'
 export default {
     name: 'Viewer',
     props: {
-        infoJson: String,
-        iiif_url: String
+        urls: Object
     },
     data() {
         return {
@@ -36,14 +35,17 @@ export default {
         this.initViewer()
     },
     watch: {
-        infoJson: {
+        urls: {
             handler() {
-                this.viewer.open({
-                    tileSource: this.infoJson
-                })
+                document.getElementById('pixelitimg').onload = () => {
+                    this.viewer.open({
+                        tileSource: this.urls.infoJson
+                    })
+                }
             },
             deep: true
-        }
+        },
+
     },
     methods: {
         initViewer() {
