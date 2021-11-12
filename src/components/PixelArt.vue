@@ -9,15 +9,15 @@
       />
     </div>
     <div class="pixelart-info columns">
-      <PixelArtOptions
-        class="box column"
-        @download="download"
-      /> 
       <PixelArtInfo 
-        class="column"
+        class="box column is-3"
         :imageInfo="image"
         :api_id="image.api_id"
       />
+      <PixelArtOptions
+        class="column is-3"
+        @download="download"
+      /> 
     </div>  
   </div>
 </template>
