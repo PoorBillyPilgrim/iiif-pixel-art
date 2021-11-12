@@ -13,14 +13,18 @@ import pixelit from '../vendor/pixelit.js'
 export default {
     name: 'Viewer',
     props: {
-        infoJson: String
+        infoJson: String,
+        iiif_url: String
     },
     data() {
         return {
+            id: null,
             viewer: null,
-            canvas: null,
-            img: (new Image()),
             tiledImage: null,
+            //overlays: [],
+            img: new Image(),
+            canvas: document.createElement('canvas'),
+            tiles: [],
             pixelImage: null,
             isPixelated: false,
             pixelArtOptions: {
@@ -32,6 +36,8 @@ export default {
     },
     mounted: function() {
         this.initViewer()
+        //this.getImage()
+        //console.log(this.iiif_url)
     },
     watch: {
         infoJson: {
@@ -39,6 +45,14 @@ export default {
                 this.viewer.open({
                     tileSource: this.infoJson
                 })
+            },
+            deep: true
+        },
+        iiif_url: {
+            handler() {
+                this.img.src = this.iiif_url
+                this.img.id = 'pixelitimg'
+                console.log(this.img)
             },
             deep: true
         }
@@ -54,56 +68,43 @@ export default {
             this.addOverlay()
             
         },
+        getImage() {
+            //this.img.src = this.iiif_url
+            console.log(this.iiif_url)
+        },
         addOverlay() {
-            this.viewer.addHandler('open', (viewer) => {
-                this.tiledImage = this.viewer.world.getItemAt(0)
-                let croppedImage = new Image()
+            this.viewer.addHandler('open', async () => {
+                //this.img.src = 
+                //this.img = this.iiif_url
+                //let json = await response.json()
+                console.log('hello')
+                
+                //console.log(this.api_id)
+                /*this.tiledImage = this.viewer.world.getItemAt(0)
+                let imgData
                 this.tiledImage.addHandler('fully-loaded-change', () => {
-                    /*this.img.src = viewer.eventSource.drawer.canvas.toDataURL('image/png')
-                    let { height, width } = this.tiledImage.getBounds()
-                    this.img.height = height
-                    this.img.width = width*/
-                    let viewportRect = viewer.eventSource.viewport.getBounds()
-                    var rect = viewer.eventSource.viewport.viewportToViewerElementRectangle(viewportRect);
-                    const { x, y, width, height } = rect
-                    const { canvas } = viewer.eventSource.drawer;
-
-                    this.img.onload = () => {
-                        let croppedCanvas = document.createElement('canvas');
-                        let ctx = croppedCanvas.getContext('2d');
-                        croppedCanvas.width = width;
-                        croppedCanvas.height = height;
-
-                        const pixelDens = OpenSeadragon.pixelDensityRatio;
-                        ctx.drawImage(this.img, x*pixelDens, y*pixelDens, width*pixelDens, height*pixelDens, 0, 0, width, height);
-                        croppedImage.src = croppedCanvas.toDataURL(); 
-                    }
-                    this.img.src = canvas.toDataURL();
+                    imgData = viewer.eventSource.drawer.canvas.toDataURL('image/png')
+                    this.img.src = imgData;
                 })
-
-        
-                //this.canvas = document.createElement("canvas")
-                //console.log(this.tiledImage)
-                // test adding tags to overlay
-                //this.canvas.id = 'pixelitcanvas'
-                //this.canvas.className = 'overlay'
-                //this.canvas.style.backgroundColor = 'blue'
-                //this.canvas.style.opacity = '0.5'
-                this.img.id = 'pixelitcanvas'
+                
+                this.img.id = 'pixelitimg'
                 this.img.className = 'overlay'
                 this.img.style.backgroundColor = 'blue'
                 this.img.style.opacity = '0.5'
                 viewer.eventSource.addOverlay({
-                    element: croppedImage,
-                    location: this.tiledImage.getBounds()
+                    element: this.img,
+                    location: viewer.eventSource.viewport.getBounds()
                 })
+                this.canvas.id = 'pixelitcanvas'
+                viewer.eventSource.addOverlay({
+                    element: this.canvas,
+                    location: viewer.eventSource.viewport.getBounds()
+                })*/
             })
         },
         pixelate() {
-            //this.setCanvasSize();
-
             this.pixelImage = new pixelit(this.pixelArtOptions);
-            this.pixelImage.draw().pixelate().resizeImage();
+            this.pixelImage.draw().pixelate().resizeImage().hideFromImg();
             this.isPixelated = true;
         }
     }

@@ -6,6 +6,7 @@
       />
       <Viewer 
         :infoJson="image.url"
+        :iiif_url="image.iiif_url"
       />
       <!--<p v-if="loading">loading...</p>
       <div v-else class="img-comp-container">
@@ -39,7 +40,7 @@
 </template>
 <script>
 // vendors
-import pixelit from '../vendor/pixelit.js'
+//import pixelit from '../vendor/pixelit.js'
 // components
 import Viewer from '@/components/Viewer.vue'
 import PixelArtInfo from '@/components/PixelArtInfo.vue'
@@ -64,6 +65,7 @@ export default {
         api_id: 24645,
         iiif_id: null,
         url: null,
+        iiif_url: null,
         title: null,
         artist: null,
         origin: null
@@ -89,13 +91,13 @@ export default {
     })
   },
   methods: {
-    updatePixelSize(pixelSize) {
+    /*updatePixelSize(pixelSize) {
       this.pixelArtOptions.scale = pixelSize;
       if (this.isPixelated) {
         this.pixelImage = new pixelit(this.pixelArtOptions);
         this.pixelImage.draw().pixelate().resizeImage();
       }
-    },
+    },*/
     download(event) {
       if (event) this.pixelImage.saveImage();
     },
@@ -115,18 +117,18 @@ export default {
           this.loading = false;
         });
     },
-    pixelate() {
+    /*pixelate() {
       this.setCanvasSize();
-      /*let img = document.getElementById("pixelitimg");
-      console.log('height: ' + img.height, 'width: ' + img.width)*/
+      let img = document.getElementById("pixelitimg");
+      console.log('height: ' + img.height, 'width: ' + img.width)
       this.pixelImage = new pixelit(this.pixelArtOptions);
       this.pixelImage.draw().pixelate().resizeImage();
       this.isPixelated = true;
-    },
-    onLoad() {
+    },*/
+    /*onLoad() {
       this.loadSlider = true;
       this.pixelate();
-    },
+    },*/
     setArtistInfo(data) {
       this.image.artist = data.artist_title;
       this.image.title = data.title;
@@ -134,7 +136,7 @@ export default {
     },
     setImageInfo(data) {
       this.image.iiif_id = data.image_id;
-      //this.image.url = this.$iiif_url + this.image.iiif_id + this.$image_full_size;
+      this.image.iiif_url = this.$iiif_url + this.image.iiif_id + this.$image_full_size;
       this.image.url = this.$iiif_url + this.image.iiif_id +'/info.json'
     }
   }
