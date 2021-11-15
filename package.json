@@ -10,6 +10,7 @@
   "dependencies": {
     "buefy": "^0.9.8",
     "core-js": "^3.6.5",
+    "lodash": "^4.17.21",
     "openseadragon": "^2.4.2",
     "vue": "^2.6.11"
   },
