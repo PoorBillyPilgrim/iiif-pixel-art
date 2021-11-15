@@ -18,11 +18,11 @@
                         </div>
                         <div class="media-content">
                             {{ props.option.title }}
+                            <br>
+                            <small>
+                                {{ props.option.artist || "name"}}, {{ props.option.origin || "origin"}}
+                            </small>
                         </div>
-                        <br>
-                        <small>
-                            {{ props.option.artist }}, {{ props.option.origin || "hello"}}
-                        </small>
                     </div>
                 </template>
             </b-autocomplete>
@@ -42,13 +42,13 @@
             }
         },
         methods: {
-            getSearchResults: debounce(function (name) {
-                if (!name.length) {
+            getSearchResults: debounce(function (term) {
+                if (!term.length) {
                     this.data = []
                     return
                 }
                 this.isFetching = true
-                fetch(this.$api_url + "artworks/search?query[term][is_public_domain]=true&limit=10&page=1")
+                fetch(`${this.$api_url}artworks/search?query[term][is_public_domain]=true&q=${term}`)
                     .then(res => res.json())
                     .then(json => {
                         this.data = []
