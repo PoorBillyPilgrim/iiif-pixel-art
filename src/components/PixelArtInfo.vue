@@ -3,7 +3,7 @@
         <h3 class="title is-4">{{imageInfo.title}}</h3>
         <p class="subtitle is-6">{{imageInfo.artist}}</p>
         <p class="subtitle is-6">{{imageInfo.origin}}</p>
-        <a :href="url" target="_blank">View at the Art Institute's website</a>
+        <p class="subtitle is-6"><a :href="url" target="_blank">View Online</a></p>
     </div>
 </template>
 

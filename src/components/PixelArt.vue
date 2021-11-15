@@ -4,21 +4,25 @@
       <PixelArtSearch 
         class="search block"
       />
-      <Viewer 
-        :urls="urls"
-      />
-    </div>
-    <div class="pixelart-info columns">
-      <PixelArtInfo 
-        class="box column is-3"
-        :imageInfo="image"
-        :api_id="image.api_id"
-      />
-      <PixelArtOptions
-        class="column is-3"
-        @download="download"
-      /> 
-    </div>  
+      <div class="columns">
+        <Viewer 
+          class="column"
+          :urls="urls"
+        />
+        <div class="pixelart-info is-flex-tablet column is-3">
+          <PixelArtOptions
+            class="options"
+            @download="download"
+          /> 
+          <PixelArtInfo
+            class="info"
+            :imageInfo="image"
+            :api_id="image.api_id"
+          />
+
+        </div>
+      </div>
+    </div> 
   </div>
 </template>
 <script>
@@ -133,7 +137,11 @@ export default {
 }
 
 .pixelart-info {
-  margin-top: 245px;
+  margin-top: 0 !important;
+}
+
+.options {
+  margin-bottom: 1rem;
 }
 
 img {
@@ -164,11 +172,16 @@ img {
   #pixelart {
     margin: 0 3rem;
   }
-
-  .pixelart-info {
-    margin-top: 15px !important;
-  }
   
+  .pixelart-info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .info {
+    margin-top: auto;
+  }
+
   .search {
     width: var(--w);
   }
