@@ -8,8 +8,10 @@
                 :data="data"
                 field="title"
                 :loading="isFetching"
+                :check-infinite-scroll="true"
                 @typing="getSearchResults"
-                @select="option => selected = option">
+                @select="option => selected = option"
+                @infinite-scroll="getNextPage">
 
                 <template slot-scope="props">
                     <div class="media">
@@ -38,28 +40,40 @@
             return {
                 data: [],
                 selected: null,
-                isFetching: false
+                isFetching: false,
+                term: '',
+                page: 1
             }
         },
         methods: {
             getSearchResults: debounce(function (term) {
+                // Search term updated
+                if(this.term !== term) {
+                    this.term = term
+                    this.data = []
+                    this.page = 1
+                }
+                // Search bar cleared
                 if (!term.length) {
                     this.data = []
+                    this.page = 1
                     return
                 }
                 this.isFetching = true
-                fetch(`${this.$api_url}artworks/search?query[term][is_public_domain]=true&q=${term}`)
+                fetch(`${this.$api_url}artworks/search?query[term][is_public_domain]=true&limit=10&page=${this.page}&q=${term}`, { headers: { 'AIC-User-Agent': 'iiif-pixel-art (tjjones93@gmail.com)' } })
                     .then(res => res.json())
                     .then(json => {
-                        this.data = []
                         json.data.forEach(item => this.data.push(item))
+                        this.page++
                     })
                     .catch(err => {
-                        this.data = []
                         console.error(err)
                     })
                     .finally(() => this.isFetching = false)
-            }, 500)
+            }, 500),
+            getNextPage: debounce(function() {
+                this.getSearchResults(this.term)
+            }, 250)
         }
     }
 </script>
