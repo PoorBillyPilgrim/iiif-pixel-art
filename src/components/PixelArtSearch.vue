@@ -46,7 +46,7 @@
             }
         },
         methods: {
-            getSearchResults: debounce(function (term) {
+            getSearchResults: debounce(async function (term) {
                 // Search term updated
                 if(this.term !== term) {
                     this.term = term
@@ -60,16 +60,16 @@
                     return
                 }
                 this.isFetching = true
-                fetch(`${this.$api_url}artworks/search?query[term][is_public_domain]=true&limit=10&page=${this.page}&q=${term}`, { headers: { 'AIC-User-Agent': 'iiif-pixel-art (tjjones93@gmail.com)' } })
-                    .then(res => res.json())
-                    .then(json => {
-                        json.data.forEach(item => this.data.push(item))
-                        this.page++
-                    })
-                    .catch(err => {
-                        console.error(err)
-                    })
-                    .finally(() => this.isFetching = false)
+                try {
+                    let res = await fetch(`${this.$api_url}artworks/search?query[term][is_public_domain]=true&limit=10&page=${this.page}&q=${term}`, { headers: { 'AIC-User-Agent': 'iiif-pixel-art (tjjones93@gmail.com)' } })
+                    let json = await res.json()
+                    json.data.forEach(item => this.data.push(item))
+                    this.page++
+                } catch(err) {
+                    console.error(err)
+                } finally {
+                    this.isFetching = false
+                }
             }, 500),
             getNextPage: debounce(function() {
                 this.getSearchResults(this.term)
