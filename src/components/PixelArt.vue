@@ -91,7 +91,13 @@ export default {
     },
     getImage() {
       this.loading = true;
-      fetch(this.$api_url + "artworks/" + this.image.api_id)
+      //const headers = new Headers({ 'AIC-User-Agent': 'iiif-pixel-art (tjjones93@gmail.com)'});
+
+      fetch(this.$api_url + "artworks/" + this.image.api_id, { 
+        headers: { 
+          'AIC-User-Agent': 'iiif-pixel-art (tjjones93@gmail.com)'
+          } 
+        })
         .then(res => res.json())
         .then(data => {
           this.setArtistInfo(data.data);
@@ -99,7 +105,8 @@ export default {
         })
         .finally(() => {
           this.loading = false;
-        });
+        })
+        .catch(err => console.error(err));
     },
     setArtistInfo(data) {
       this.image.artist = data.artist_title;
