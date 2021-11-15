@@ -1,6 +1,6 @@
 <template>
     <section>
-        <p><b>Selected:</b></p>
+        <p><b>Selected:</b>{{selected.data.api_link}}</p>
         <p class="has-text-left mb-1">Search the Collection</p>
         <b-field>
             <b-autocomplete
@@ -16,13 +16,13 @@
                 <template slot-scope="props">
                     <div class="media">
                         <div class="media-left">
-                            <img width="32" src="https://bulma.io/images/placeholders/128x128.png">
+                            <img width="65" :src="`${props.option.config.iiif_url}/${props.option.data.image_id}/full/400,/0/default.jpg`">
                         </div>
                         <div class="media-content">
-                            {{ props.option.title }}
+                            {{ props.option.data.title || "title" }}
                             <br>
                             <small>
-                                {{ props.option.artist || "name"}}, {{ props.option.origin || "origin"}}
+                                {{ props.option.data.artist_title || "name"}}, {{ props.option.data.place_of_origin || "origin"}}
                             </small>
                         </div>
                     </div>
@@ -62,8 +62,12 @@
                 this.isFetching = true
                 try {
                     let res = await fetch(`${this.$api_url}artworks/search?query[term][is_public_domain]=true&limit=10&page=${this.page}&q=${term}`, { headers: { 'AIC-User-Agent': 'iiif-pixel-art (tjjones93@gmail.com)' } })
-                    let json = await res.json()
-                    json.data.forEach(item => this.data.push(item))
+                    let { data } = await res.json()
+                    for (let i = 0; i < data.length; i++) {
+                        let res = await fetch(data[i].api_link)
+                        let artwork = await res.json()
+                        this.data.push(artwork)
+                    }
                     this.page++
                 } catch(err) {
                     console.error(err)
@@ -73,7 +77,8 @@
             }, 500),
             getNextPage: debounce(function() {
                 this.getSearchResults(this.term)
-            }, 250)
+            }, 250),
+
         }
     }
 </script>
