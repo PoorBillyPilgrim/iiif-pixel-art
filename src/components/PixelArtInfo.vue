@@ -16,7 +16,7 @@ export default {
     },
     computed: {
         url: function () {
-            return this.$aic_website + this.api_id;
+            return this.$aic_website + this.api_id
         }
     }
 }

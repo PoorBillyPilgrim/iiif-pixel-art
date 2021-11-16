@@ -45,55 +45,55 @@ export default {
         }
     },
     created: function() {
-        this.setGalleryImages();
+        this.setGalleryImages()
     },
     mounted: function() {
-        this.preloadImages();
+        this.preloadImages()
     },
     methods: {
         async setGalleryImages() {
-            let results = await this.getSearchResults(this.page); 
+            let results = await this.getSearchResults(this.page) 
             for (let i = 0; i < results.data.length; i++) {
-                let res = await fetch(results.data[i].api_link);
-                let artwork = await res.json();
-                let img = new Image();
+                let res = await fetch(results.data[i].api_link)
+                let artwork = await res.json()
+                let img = new Image()
                 img.src = artwork.config.iiif_url + '/' + artwork.data.image_id + this.$image_thumbnail
-                this.gallery.push(artwork);
+                this.gallery.push(artwork)
             }
-            this.isLoading = false;
+            this.isLoading = false
         },
         async preloadImages() {
-            let results = await this.getSearchResults(this.page + 1); 
+            let results = await this.getSearchResults(this.page + 1) 
             for (let i = 0; i < results.data.length; i++) {
-                let res = await fetch(results.data[i].api_link);
-                let artwork = await res.json();
-                let img = new Image();
+                let res = await fetch(results.data[i].api_link)
+                let artwork = await res.json()
+                let img = new Image()
                 img.src = artwork.config.iiif_url + '/' + artwork.data.image_id + this.$image_thumbnail
             }
         },
         async getSearchResults(page) {
-            this.isLoading = true;
-            let response = await fetch(this.$api_url + "artworks/search?query[term][is_public_domain]=true&limit=5&page=" + page);
-            let results = await response.json();
-            return results;
+            this.isLoading = true
+            let response = await fetch(this.$api_url + 'artworks/search?query[term][is_public_domain]=true&limit=5&page=' + page)
+            let results = await response.json()
+            return results
         },
         next() {
-            this.page++;
-            this.gallery = [];
-            this.setGalleryImages();
-            this.preloadImages();
+            this.page++
+            this.gallery = []
+            this.setGalleryImages()
+            this.preloadImages()
         },
         prev() {
-            if (this.page == 1) return;
-            this.page--;
-            this.gallery = [];
-            this.setGalleryImages();
+            if (this.page == 1) return
+            this.page--
+            this.gallery = []
+            this.setGalleryImages()
         },
         thumbnail(image) {
             return image.config.iiif_url + '/' + image.data.image_id + this.$image_thumbnail
         },
         replacePixelImage(index) {
-            this.$root.$emit('gallery-click', this.gallery[index]);
+            this.$root.$emit('gallery-click', this.gallery[index])
         }
     }
 }

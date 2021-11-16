@@ -23,23 +23,23 @@ export default {
     },
     created: function() {
         window.addEventListener('resize', () => {
-            this.width = document.getElementById("pixelitimg").offsetWidth;
-            let w, h;
-            let img = document.getElementById("img-comp-overlay");
-            w = img.offsetWidth;
-            h = img.offsetHeight;
-            img.style.width = (w / 2) + "px";
+            this.width = document.getElementById('pixelitimg').offsetWidth
+            let w, h
+            let img = document.getElementById('img-comp-overlay')
+            w = img.offsetWidth
+            h = img.offsetHeight
+            img.style.width = (w / 2) + 'px'
 
-            let slider = document.getElementById("img-comp-slider");
-            this.repositionSlider(h, w, slider);
-        });
+            let slider = document.getElementById('img-comp-slider')
+            this.repositionSlider(h, w, slider)
+        })
     },
     watch: {
         loadSlider: {
             handler() {
                 if (this.loadSlider) {
-                    this.compareImages();
-                    this.width = document.getElementById("pixelitimg").offsetWidth;
+                    this.compareImages()
+                    this.width = document.getElementById('pixelitimg').offsetWidth
                 }
             },
             deep: true
@@ -52,59 +52,59 @@ export default {
      **/
     methods: {
         ready(event) {
-            event.preventDefault();
-            this.clicked = true;
-            window.addEventListener("mousemove", this.move);
-            window.addEventListener("touchmove", this.move);
+            event.preventDefault()
+            this.clicked = true
+            window.addEventListener('mousemove', this.move)
+            window.addEventListener('touchmove', this.move)
         },
         finished() {
-            this.clicked = false;
+            this.clicked = false
         },
         move(event) {
-            if (!this.clicked) return;
-            let pos = this.getCursorPos(event);
-            if (pos < 0) pos = 0;
-            if (pos > this.width) pos = this.width;
-            this.slide(pos);
+            if (!this.clicked) return
+            let pos = this.getCursorPos(event)
+            if (pos < 0) pos = 0
+            if (pos > this.width) pos = this.width
+            this.slide(pos)
         },
         slide(x) {
             /*resize the image:*/
-            let img;
-            img = document.getElementById("img-comp-overlay");
-            let slider;
-            slider = document.getElementById("img-comp-slider");
-            img.style.width = x + "px";
+            let img
+            img = document.getElementById('img-comp-overlay')
+            let slider
+            slider = document.getElementById('img-comp-slider')
+            img.style.width = x + 'px'
             /*position the slider:*/
-            slider.style.left = img.offsetWidth - (slider.offsetWidth / 2) + "px";
+            slider.style.left = img.offsetWidth - (slider.offsetWidth / 2) + 'px'
         },
         getCursorPos(event) {
-            let a, x = 0;
-            event = event || window.event;
+            let a, x = 0
+            event = event || window.event
             /* get the x positions of the image:*/
-            a = document.getElementById("img-comp-overlay").getBoundingClientRect();
+            a = document.getElementById('img-comp-overlay').getBoundingClientRect()
             /* calculate the cursor's x coordinate, relative to the image:*/
-            x = event.pageX - a.left;
+            x = event.pageX - a.left
             /* consider any page scrolling:*/
-            x = x - window.pageXOffset;
-            return x;
+            x = x - window.pageXOffset
+            return x
         },
         compareImages() {
-            document.getElementById("img-comp-slider").style.visibility = "visible";
-            let w, h;
-            let img = document.getElementById("img-comp-overlay");
-            w = img.offsetWidth;
-            h = img.offsetHeight;
-            img.style.width = (w / 2) + "px";
+            document.getElementById('img-comp-slider').style.visibility = 'visible'
+            let w, h
+            let img = document.getElementById('img-comp-overlay')
+            w = img.offsetWidth
+            h = img.offsetHeight
+            img.style.width = (w / 2) + 'px'
 
-            let slider = document.getElementById("img-comp-slider");
-            this.repositionSlider(h, w, slider);
+            let slider = document.getElementById('img-comp-slider')
+            this.repositionSlider(h, w, slider)
 
-            window.addEventListener("mouseup", this.finished);
-            window.addEventListener("touchend", this.finished);
+            window.addEventListener('mouseup', this.finished)
+            window.addEventListener('touchend', this.finished)
         },
         repositionSlider(h, w, slider) {
-            slider.style.top = (h /2) - (slider.offsetHeight / 2) + "px";
-            slider.style.left = (w / 2) - (slider.offsetWidth / 2) + "px";
+            slider.style.top = (h /2) - (slider.offsetHeight / 2) + 'px'
+            slider.style.left = (w / 2) - (slider.offsetWidth / 2) + 'px'
         }
     }
 }

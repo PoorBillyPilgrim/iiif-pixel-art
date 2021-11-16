@@ -67,15 +67,15 @@ export default {
     }
   },
   created: function() {
-      this.getImage();
+      this.getImage()
       window.addEventListener('resize', this.pixelate)
   },
   mounted: function() {
     // handle when user selects gallery image
     this.$root.$on('gallery-click', image => {
-      this.loadSlider = false;
-      this.image.api_id = image.data.id;
-      this.getImage();
+      this.loadSlider = false
+      this.image.api_id = image.data.id
+      this.getImage()
     })
     
     // handle when user selects search result
@@ -95,37 +95,37 @@ export default {
   },
   methods: {
     download(event) {
-      if (event) this.pixelImage.saveImage();
+      if (event) this.pixelImage.saveImage()
     },
     setCanvasSize() {
-      this.pixelArtOptions.maxWidth = document.getElementById("pixelitimg").width;
-      this.pixelArtOptions.maxHeight = document.getElementById("pixelitimg").height;
+      this.pixelArtOptions.maxWidth = document.getElementById('pixelitimg').width
+      this.pixelArtOptions.maxHeight = document.getElementById('pixelitimg').height
     },
     getImage() {
-      this.loading = true;
-      fetch(this.$api_url + "artworks/" + this.image.api_id, { 
+      this.loading = true
+      fetch(this.$api_url + 'artworks/' + this.image.api_id, { 
         headers: { 
           'AIC-User-Agent': 'iiif-pixel-art (tjjones93@gmail.com)'
           } 
         })
         .then(res => res.json())
         .then(data => {
-          this.setArtistInfo(data.data);
-          this.setImageInfo(data.data);
+          this.setArtistInfo(data.data)
+          this.setImageInfo(data.data)
         })
         .finally(() => {
-          this.loading = false;
+          this.loading = false
         })
-        .catch(err => console.error(err));
+        .catch(err => console.error(err))
     },
     setArtistInfo(data) {
-      this.image.artist = data.artist_title;
-      this.image.title = data.title;
-      this.image.origin = data.place_of_origin;
+      this.image.artist = data.artist_title
+      this.image.title = data.title
+      this.image.origin = data.place_of_origin
     },
     setImageInfo(data) {
-      this.image.iiif_id = data.image_id;
-      this.image.iiif_url = this.$iiif_url + this.image.iiif_id + this.$image_full_size;
+      this.image.iiif_id = data.image_id
+      this.image.iiif_url = this.$iiif_url + this.image.iiif_id + this.$image_full_size
       this.image.url = this.$iiif_url + this.image.iiif_id +'/info.json'
     }
   }

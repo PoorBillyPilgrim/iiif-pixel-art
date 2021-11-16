@@ -36,8 +36,8 @@ export default {
         this.$root.$on('updatedPixelSize', pixelSize => {
             this.pixelArtOptions.scale = pixelSize
             if (this.isPixelated) {
-                this.pixelImage = new pixelit(this.pixelArtOptions);
-                this.pixelImage.draw().pixelate().resizeImage();
+                this.pixelImage = new pixelit(this.pixelArtOptions)
+                this.pixelImage.draw().pixelate().resizeImage()
             }
         })
     },
@@ -78,9 +78,9 @@ export default {
             })
         },
         pixelate() {
-            this.pixelImage = new pixelit(this.pixelArtOptions);
-            this.pixelImage.draw().pixelate().hideFromImg();
-            this.isPixelated = true;
+            this.pixelImage = new pixelit(this.pixelArtOptions)
+            this.pixelImage.draw().pixelate().hideFromImg()
+            this.isPixelated = true
         }
     }
 }

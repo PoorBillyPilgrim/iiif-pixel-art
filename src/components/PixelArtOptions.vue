@@ -29,10 +29,10 @@ export default {
     },
     methods: {
         updatePixelSize() {
-            this.$root.$emit("updatedPixelSize", this.pixelSize);
+            this.$root.$emit('updatedPixelSize', this.pixelSize)
         },
         download() {
-            this.$emit("download", event)
+            this.$emit('download', event)
         }
     }
 }
