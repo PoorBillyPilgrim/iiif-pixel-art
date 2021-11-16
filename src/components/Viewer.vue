@@ -73,7 +73,17 @@ export default {
                 viewer.eventSource.addOverlay({
                     element: this.pixelitCanvas,
                     location: this.tiledImage.getBounds()
-                })          
+                })
+                //console.log(viewer.eventSource.getOverlayById(this.pixelitCanvas.id).getBounds(viewer.eventSource.viewport))
+                let el = document.createElement('div')
+                el.id = 'test'
+                el.style.backgroundColor = 'blue'
+                let {height, width} = this.tiledImage.getBounds()
+                viewer.eventSource.addOverlay({
+                    element: el,
+                    location: new OpenSeadragon.Rect(0, 0, (width / 2), height)
+                })
+                
                 this.pixelate()
             })
         },
