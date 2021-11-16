@@ -105,9 +105,9 @@ export default {
         background-color: blue;
     }
 
-    @media only screen and (min-device-width: 1400px) {
+    @media only screen and (min-device-width: 1024px) {
         #openseadragon {
-            height: 1000px;
+            height: 600px;
         }
     }
 </style>
