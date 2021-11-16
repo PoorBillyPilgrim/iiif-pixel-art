@@ -9,7 +9,7 @@
                 :loading="isFetching"
                 :check-infinite-scroll="true"
                 @typing="getSearchResults"
-                @select="option => selected = option"
+                @select="handleSelect"
                 @infinite-scroll="getNextPage">
 
                 <template slot-scope="props">
@@ -77,7 +77,9 @@
             getNextPage: debounce(function() {
                 this.getSearchResults(this.term)
             }, 250),
-
+            handleSelect(option) { 
+                this.$root.$emit('search-select', option)
+            }
         }
     }
 </script>
