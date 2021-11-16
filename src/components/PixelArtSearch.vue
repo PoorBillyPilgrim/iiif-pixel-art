@@ -1,6 +1,5 @@
 <template>
     <section>
-        <p><b>Selected:</b>{{selected.data.api_link}}</p>
         <p class="has-text-left mb-1">Search the Collection</p>
         <b-field>
             <b-autocomplete
