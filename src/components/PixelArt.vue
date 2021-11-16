@@ -71,10 +71,18 @@ export default {
       window.addEventListener('resize', this.pixelate)
   },
   mounted: function() {
+    // handle when user selects gallery image
     this.$root.$on('gallery-click', image => {
       this.loadSlider = false;
       this.image.api_id = image.data.id;
       this.getImage();
+    })
+    
+    // handle when user selects search result
+    this.$root.$on('search-select', option => {
+      this.loadSlider = false
+      this.image.api_id = option.data.id
+      this.getImage()
     })
   },
   computed: {
@@ -95,8 +103,6 @@ export default {
     },
     getImage() {
       this.loading = true;
-      //const headers = new Headers({ 'AIC-User-Agent': 'iiif-pixel-art (tjjones93@gmail.com)'});
-
       fetch(this.$api_url + "artworks/" + this.image.api_id, { 
         headers: { 
           'AIC-User-Agent': 'iiif-pixel-art (tjjones93@gmail.com)'
