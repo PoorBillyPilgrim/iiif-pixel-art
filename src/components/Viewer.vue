@@ -2,6 +2,7 @@
     <div id="container">
         <div id="openseadragon">
             <div id="line" style="height: 100%; width: 1px; position: absolute; left: 50%; background-color: blue"></div>
+            <div id="slider" style="width: 40px; height: 40px; border-radius: 50%; opacity: 0.5; background-color: black; position: absolute; top: 50%; left: 50%; margin-left: -20px; margin-top: 10px;"></div>
         </div>
         <img id="pixelitimg" :src="urls.iiif"/>
     </div>
@@ -30,12 +31,19 @@ export default {
                 maxWidth: null,
                 scale: 50
             },
-            middle: null
+            middle: null,
+            fixedMiddle: null,
+            clip: null,
+            rox: null
         }
     },
     mounted() {
         this.initViewer()
         
+        this.viewer.addHandler('open', (viewer) => {
+            this.pixelateTiledImage(viewer)
+        })
+
         this.$root.$on('updatedPixelSize', pixelSize => {
             this.pixelArtOptions.scale = pixelSize
             if (this.isPixelated) {
@@ -64,95 +72,74 @@ export default {
                 prefixUrl: '//openseadragon.github.io/openseadragon/images/',
                 crossOriginPolicy: 'Anonymous'
             })
-            this.addOverlay()
-            
         },
-        addOverlay() {
-            this.viewer.addHandler('open', async (viewer) => {
-                this.tiledImage = this.viewer.world.getItemAt(0)
+        pixelateTiledImage(viewer) {
+    
+            this.tiledImage = this.viewer.world.getItemAt(0)
 
-                this.pixelitCanvas.id = 'pixelitcanvas'
-                
+            this.pixelitCanvas.id = 'pixelitcanvas'
 
-                viewer.eventSource.addOverlay({
-                    element: this.pixelitCanvas,
-                    location: this.tiledImage.getBounds()
-                })
-                this.pixelitCanvas.style.zIndex = "-1"
-                //console.log(viewer.eventSource.getOverlayById(this.pixelitCanvas.id).getBounds(viewer.eventSource.viewport))
-                /*let el = document.createElement('div')
-                el.id = 'test'
-                el.style.backgroundColor = 'blue'
-                
-                //let canvas = document.getElementById('pixelitcanvas')
-                //let ctx = canvas.getContext('2d')
-                //ctx.rect(0, 0, (canvas.style.width / 2), canvas.style.height)
-                //ctx.clip()
-
-                //let {height, width} = this.tiledImage.getBounds()
-                let view = document.getElementById('openseadragon')
-                let height = view.offsetHeight;
-                let width = view.offsetWidth;
-                this.middle = new OpenSeadragon.Point(width/2, height/2)
-                viewer.eventSource.addOverlay({
-                    element: el,
-                    location: new OpenSeadragon.Point(0, 0),
-                    checkResize: false,
-                    width: width/2,
-                    height: height
-                })*/
-                //let lox = viewer.eventSource.viewport.viewportToImageCoordinates(this.middle).x
-                /*let rightRect = viewer.eventSource.viewport.getBounds()
-                rightRect.x = 0.5
-                rightRect.width = rightRect.width/2
-                let el = document.createElement('div')
-                el.id = 'test'
-                el.style.backgroundColor = 'blue'
-                viewer.eventSource.addOverlay({
-                    element: el,
-                    location: rightRect,
-                    checkResize: false
-                })*/
-                //let leftRect = viewer.eventSource.viewport.imageToViewportRectangle(0, 0, this.middle.x, height)
-                //leftRect.height = height
-                //leftRect.width = width
-                //leftRect.x = lox
-                //console.log('with margins: ', viewer.eventSource.viewport.getBoundsWithMargins())
-                console.log('image bounds: ', this.tiledImage.getBounds())
-                //console.log('container size: ', viewer.eventSource.viewport.getContainerSize())
-                console.log(this.tiledImage.getContentSize())
-                //console.log(this.tiledImage.viewportToImageCoordinates(this.middle))
-                //this.tiledImage.setClip(rightRect)
-                let container = document.getElementById('openseadragon')
-                let containerHeight = container.offsetHeight;
-                let containerWidth = container.offsetWidth;
-                this.middle = new OpenSeadragon.Point(containerWidth/2, containerHeight/2)
-                let fixedMiddle = viewer.eventSource.viewport.viewerElementToViewportCoordinates(this.middle)
-                console.log('fixedMid: ', fixedMiddle)
-                console.log('center: ', viewer.eventSource.viewport.getCenter())
-                let rox = this.tiledImage.viewportToImageCoordinates(0.5).x
-                console.log(rox)
-                let rightRect = new OpenSeadragon.Rect(0,0,0,0)
-                rightRect.height = this.tiledImage.getContentSize().y
-                rightRect.x = rox
-                rightRect.width = this.tiledImage.getContentSize().x - rox
-                this.tiledImage.setClip(rightRect)
-                //console.log(''rox)
-                console.log(rightRect)
-                this.pixelate()
-              
-                
-                
-                
+            viewer.eventSource.addOverlay({
+                element: this.pixelitCanvas,
+                location: this.tiledImage.getBounds()
             })
+            this.pixelitCanvas.style.zIndex = "-1"
+
+            let container = document.getElementById('openseadragon')
+            let containerHeight = container.offsetHeight;
+            let containerWidth = container.offsetWidth;
+            this.middle = new OpenSeadragon.Point(containerWidth/2, containerHeight/2)
+            this.fixedMiddle = viewer.eventSource.viewport.viewerElementToViewportCoordinates(this.middle)
+
+            console.log('fixedMid: ', this.fixedMiddle)
+            console.log('center: ', viewer.eventSource.viewport.getCenter())
+            console.log('center in image coordinates', viewer.eventSource.viewport.viewportToImageCoordinates(viewer.eventSource.viewport.getCenter()))
+
+            this.rox = this.tiledImage.viewportToImageCoordinates(0.5).x
+            console.log(this.rox)
+            console.log('before clip: ', this.tiledImage.getBounds())
+            this.initClip()
+            console.log('margins: ', viewer.eventSource.viewport.getMargins())
+            let leftMargin = viewer.eventSource.viewport.viewportToViewerElementCoordinates(new OpenSeadragon.Point(0.5, 0))
+            console.log(leftMargin)
+            let margin = {top: 0, right: 0, bottom: 0, left: 0}
+            margin.left = leftMargin.x
+            viewer.eventSource.viewport.setMargins({top: 0, right: 0, left: leftMargin.x, bottom: 0})
+            /***** 
+             * 
+             * need to track top-right and/or bottom-left of tiledImage
+             * I am able to get the corners of Rect()
+             * 
+             * 
+            ****/
+            console.log(viewer.eventSource.viewport.getContainerSize())
+            /*viewer.eventSource.addHandler('animation', (e) => {
+                margin.left += 0.5
+                e.eventSource.viewport.setMargins(margin)
+            })*/
+            console.log(viewer.eventSource.viewport)
+    
+            console.log('clip: ', this.tiledImage.getClip())
+            console.log(this.clip)
+            this.pixelate()
+
         },
         pixelate() {
             this.pixelImage = new pixelit(this.pixelArtOptions)
             this.pixelImage.draw().pixelate().hideFromImg()
             this.isPixelated = true
         },
-        createClip() {
-            // reference notes
+        initClip() {
+            this.clip = new OpenSeadragon.Rect(0,0,0,0)
+            this.clip.height = this.tiledImage.getContentSize().y
+            this.clip.x = this.rox
+            this.clip.width = this.tiledImage.getContentSize().x - this.rox
+            this.tiledImage.setClip(this.clip)
+        },
+        updateClip() {
+            this.viewer.addHandler('animation', () => {
+                this.tiledImage.setClip(new OpenSeadragon.Rect(0,0,0,0))
+            })
         }
     }
 }
