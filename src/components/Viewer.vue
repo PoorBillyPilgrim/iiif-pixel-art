@@ -39,8 +39,9 @@ export default {
     },
     mounted() {
         this.initViewer()
-        
         this.viewer.addHandler('open', (viewer) => {
+            this.slider = viewer.eventSource.getOverlayById('slider')
+            this.slider.update({location: viewer.eventSource.viewport.getCenter()})
             this.pixelateTiledImage(viewer)
         })
 
@@ -56,6 +57,7 @@ export default {
         urls: {
             handler() {
                 document.getElementById('pixelitimg').onload = () => {
+                    // destroy MouseTracker to reset drag speed for each image
                     if (this.mouseTracker != null) this.mouseTracker.destroy()
                     this.viewer.open({
                         tileSource: this.urls.infoJson
@@ -73,14 +75,12 @@ export default {
                 prefixUrl: '//openseadragon.github.io/openseadragon/images/',
                 crossOriginPolicy: 'Anonymous',
                 overlays: [{
-                    id: 'slider',
-                    x: 0.5,
-                    y: 0.5
+                    id: 'slider'
                 }]
             })
         },
         pixelateTiledImage(viewer) {
-    
+            
             this.tiledImage = this.viewer.world.getItemAt(0)
             
             // add canvas on which pixelit draws pixelated image
@@ -90,15 +90,9 @@ export default {
                 location: this.tiledImage.getBounds()
             })
             this.pixelitCanvas.style.zIndex = '-1'
+
             
-            // add slider
-            // OpenSeadragon destroys overlays when viewport is closed
-            viewer.eventSource.updateOverlay({
-                element: document.getElementById('slider'),
-                location: viewer.eventSource.viewport.getCenter()
-            })
-
-
+            
             this.mouseTracker = new OpenSeadragon.MouseTracker({
                 element: document.getElementById('slider'),
                 dragHandler: (e) => {
@@ -114,7 +108,6 @@ export default {
 
             this.rox = this.tiledImage.viewportToImageCoordinates(0.5).x
             this.initClip()
-
             this.pixelate()
 
         },
@@ -131,15 +124,10 @@ export default {
             this.tiledImage.setClip(this.clip)
         },
         updateClip(rox) {
-            
             this.rox = this.tiledImage.viewportToImageCoordinates(rox).x
             this.clip.x = this.rox
             this.clip.width = this.tiledImage.getContentSize().x - this.rox
-            //console.log(this.rox)
             this.tiledImage.setClip(this.clip)
-            /*this.viewer.addHandler('animation', () => {
-                this.tiledImage.setClip(new OpenSeadragon.Rect(0,0,0,0))
-            })*/
         }
     }
 }
