@@ -1,9 +1,7 @@
 <template>
     <div id="container">
-        <div id="openseadragon">
-            <div id="line" style="height: 100%; width: 1px; position: absolute; left: 50%; background-color: blue"></div>
-        </div>
-        <div id="slider" style="width: 40px; height: 40px; background-color: black; border-radius: 50%; margin-left: -20px; margin-top: -20px"></div>
+        <div id="openseadragon"></div>
+        <div id="slider"></div>
         <img id="pixelitimg" :src="urls.iiif"/>
     </div>
 </template>
@@ -35,7 +33,8 @@ export default {
             fixedMiddle: null,
             clip: null,
             rox: null,
-            slider: null
+            slider: document.getElementById('slider'),
+            mouseTracker: null
         }
     },
     mounted() {
@@ -57,6 +56,7 @@ export default {
         urls: {
             handler() {
                 document.getElementById('pixelitimg').onload = () => {
+                    if (this.mouseTracker != null) this.mouseTracker.destroy()
                     this.viewer.open({
                         tileSource: this.urls.infoJson
                     })
@@ -71,27 +71,35 @@ export default {
             this.viewer = OpenSeadragon({
                 id: 'openseadragon',
                 prefixUrl: '//openseadragon.github.io/openseadragon/images/',
-                crossOriginPolicy: 'Anonymous'
+                crossOriginPolicy: 'Anonymous',
+                overlays: [{
+                    id: 'slider',
+                    x: 0.5,
+                    y: 0.5
+                }]
             })
         },
         pixelateTiledImage(viewer) {
     
             this.tiledImage = this.viewer.world.getItemAt(0)
-
+            
+            // add canvas on which pixelit draws pixelated image
             this.pixelitCanvas.id = 'pixelitcanvas'
-
             viewer.eventSource.addOverlay({
                 element: this.pixelitCanvas,
                 location: this.tiledImage.getBounds()
             })
             this.pixelitCanvas.style.zIndex = '-1'
-
-            viewer.eventSource.addOverlay({
+            
+            // add slider
+            // OpenSeadragon destroys overlays when viewport is closed
+            viewer.eventSource.updateOverlay({
                 element: document.getElementById('slider'),
                 location: viewer.eventSource.viewport.getCenter()
             })
 
-            new OpenSeadragon.MouseTracker({
+
+            this.mouseTracker = new OpenSeadragon.MouseTracker({
                 element: document.getElementById('slider'),
                 dragHandler: (e) => {
                     // drag the overlay
@@ -99,17 +107,13 @@ export default {
                     var delta = this.viewer.viewport.deltaPointsFromPixels(e.delta)
                     overlay.update({ location: overlay.location.plus(delta) })
                     overlay.drawHTML(this.viewer.overlaysContainer, this.viewer.viewport )
-                    console.log('x: ', overlay.location.x)
 
-                    
                     this.updateClip(overlay.location.x)
-
                 }
             })
 
             this.rox = this.tiledImage.viewportToImageCoordinates(0.5).x
             this.initClip()
-
 
             this.pixelate()
 
@@ -131,7 +135,7 @@ export default {
             this.rox = this.tiledImage.viewportToImageCoordinates(rox).x
             this.clip.x = this.rox
             this.clip.width = this.tiledImage.getContentSize().x - this.rox
-            console.log(this.rox)
+            //console.log(this.rox)
             this.tiledImage.setClip(this.clip)
             /*this.viewer.addHandler('animation', () => {
                 this.tiledImage.setClip(new OpenSeadragon.Rect(0,0,0,0))
@@ -161,10 +165,14 @@ export default {
         background-color: blue;
     }
 
-    .slider {
-        background-color: #000;
-        width: 1px;
-        height: 100%;
+    #slider {
+        display: block !important;
+        width: 40px; 
+        height: 40px; 
+        background-color: black; 
+        border-radius: 50%; 
+        margin-left: -20px; 
+        margin-top: -20px;
     }
 
     #pixelitcanvas {
