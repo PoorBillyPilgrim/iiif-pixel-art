@@ -2,8 +2,8 @@
     <div id="container">
         <div id="openseadragon">
             <div id="line" style="height: 100%; width: 1px; position: absolute; left: 50%; background-color: blue"></div>
-            <div id="slider" style="width: 40px; height: 40px; border-radius: 50%; opacity: 0.5; background-color: black; position: absolute; top: 50%; left: 50%; margin-left: -20px; margin-top: 10px;"></div>
         </div>
+        <div id="slider" style="width: 40px; height: 40px; background-color: black; border-radius: 50%; margin-left: -20px; margin-top: -20px"></div>
         <img id="pixelitimg" :src="urls.iiif"/>
     </div>
 </template>
@@ -34,7 +34,8 @@ export default {
             middle: null,
             fixedMiddle: null,
             clip: null,
-            rox: null
+            rox: null,
+            slider: null
         }
     },
     mounted() {
@@ -83,44 +84,33 @@ export default {
                 element: this.pixelitCanvas,
                 location: this.tiledImage.getBounds()
             })
-            this.pixelitCanvas.style.zIndex = "-1"
+            this.pixelitCanvas.style.zIndex = '-1'
 
-            let container = document.getElementById('openseadragon')
-            let containerHeight = container.offsetHeight;
-            let containerWidth = container.offsetWidth;
-            this.middle = new OpenSeadragon.Point(containerWidth/2, containerHeight/2)
-            this.fixedMiddle = viewer.eventSource.viewport.viewerElementToViewportCoordinates(this.middle)
+            viewer.eventSource.addOverlay({
+                element: document.getElementById('slider'),
+                location: viewer.eventSource.viewport.getCenter()
+            })
 
-            console.log('fixedMid: ', this.fixedMiddle)
-            console.log('center: ', viewer.eventSource.viewport.getCenter())
-            console.log('center in image coordinates', viewer.eventSource.viewport.viewportToImageCoordinates(viewer.eventSource.viewport.getCenter()))
+            new OpenSeadragon.MouseTracker({
+                element: document.getElementById('slider'),
+                dragHandler: (e) => {
+                    // drag the overlay
+                    var overlay = this.viewer.getOverlayById('slider')
+                    var delta = this.viewer.viewport.deltaPointsFromPixels(e.delta)
+                    overlay.update({ location: overlay.location.plus(delta) })
+                    overlay.drawHTML(this.viewer.overlaysContainer, this.viewer.viewport )
+                    console.log('x: ', overlay.location.x)
+
+                    
+                    //this.updateClip(overlay.location.x)
+
+                }
+            })
 
             this.rox = this.tiledImage.viewportToImageCoordinates(0.5).x
-            console.log(this.rox)
-            console.log('before clip: ', this.tiledImage.getBounds())
             this.initClip()
-            console.log('margins: ', viewer.eventSource.viewport.getMargins())
-            let leftMargin = viewer.eventSource.viewport.viewportToViewerElementCoordinates(new OpenSeadragon.Point(0.5, 0))
-            console.log(leftMargin)
-            let margin = {top: 0, right: 0, bottom: 0, left: 0}
-            margin.left = leftMargin.x
-            viewer.eventSource.viewport.setMargins({top: 0, right: 0, left: leftMargin.x, bottom: 0})
-            /***** 
-             * 
-             * need to track top-right and/or bottom-left of tiledImage
-             * I am able to get the corners of Rect()
-             * 
-             * 
-            ****/
-            console.log(viewer.eventSource.viewport.getContainerSize())
-            /*viewer.eventSource.addHandler('animation', (e) => {
-                margin.left += 0.5
-                e.eventSource.viewport.setMargins(margin)
-            })*/
-            console.log(viewer.eventSource.viewport)
-    
-            console.log('clip: ', this.tiledImage.getClip())
-            console.log(this.clip)
+
+
             this.pixelate()
 
         },
@@ -136,10 +126,15 @@ export default {
             this.clip.width = this.tiledImage.getContentSize().x - this.rox
             this.tiledImage.setClip(this.clip)
         },
-        updateClip() {
-            this.viewer.addHandler('animation', () => {
+        updateClip(rox) {
+            
+            this.rox = this.tiledImage.viewportToImageCoordinates(rox).x
+            this.clip.width = this.tiledImage.getContentSize().x - this.rox
+            console.log(this.rox)
+            this.tiledImage.setClip(this.clip)
+            /*this.viewer.addHandler('animation', () => {
                 this.tiledImage.setClip(new OpenSeadragon.Rect(0,0,0,0))
-            })
+            })*/
         }
     }
 }
@@ -163,6 +158,12 @@ export default {
 
     .overlay {
         background-color: blue;
+    }
+
+    .slider {
+        background-color: #000;
+        width: 1px;
+        height: 100%;
     }
 
     #pixelitcanvas {
