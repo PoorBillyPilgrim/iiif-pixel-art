@@ -102,7 +102,7 @@ export default {
                     console.log('x: ', overlay.location.x)
 
                     
-                    //this.updateClip(overlay.location.x)
+                    this.updateClip(overlay.location.x)
 
                 }
             })
@@ -129,6 +129,7 @@ export default {
         updateClip(rox) {
             
             this.rox = this.tiledImage.viewportToImageCoordinates(rox).x
+            this.clip.x = this.rox
             this.clip.width = this.tiledImage.getContentSize().x - this.rox
             console.log(this.rox)
             this.tiledImage.setClip(this.clip)
