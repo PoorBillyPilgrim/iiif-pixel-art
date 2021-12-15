@@ -189,7 +189,7 @@ img {
   }
 
   .search {
-    width: var(--w);
+    width: inherit;
   }
   
   .img-comp-container {
