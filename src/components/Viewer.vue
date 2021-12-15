@@ -2,7 +2,7 @@
     <div id="container">
         <div id="openseadragon"></div>
         <div id="slider"></div>
-        <img id="pixelitimg" :src="urls.iiif"/>
+        <img id="pixelitimg" crossOrigin="Anonymous" :src="urls.iiif"/>
     </div>
 </template>
 <script>
@@ -38,6 +38,8 @@ export default {
         }
     },
     mounted() {
+        
+        // open viewer
         this.initViewer()
         this.viewer.addHandler('open', (viewer) => {
             this.slider = viewer.eventSource.getOverlayById('slider')
@@ -45,12 +47,17 @@ export default {
             this.pixelateTiledImage(viewer)
         })
 
+        // change pixel size
         this.$root.$on('updatedPixelSize', pixelSize => {
             this.pixelArtOptions.scale = pixelSize
             if (this.isPixelated) {
                 this.pixelImage = new pixelit(this.pixelArtOptions)
                 this.pixelImage.draw().pixelate().resizeImage()
             }
+        })
+
+        this.$root.$on('download', () => {
+            this.pixelImage.saveImage()
         })
     },
     watch: {
