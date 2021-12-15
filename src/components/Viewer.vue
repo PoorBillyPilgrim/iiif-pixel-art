@@ -91,17 +91,14 @@ export default {
             })
             this.pixelitCanvas.style.zIndex = '-1'
 
-            
-            
+            // create draggable overlay that clips image on drag
             this.mouseTracker = new OpenSeadragon.MouseTracker({
                 element: document.getElementById('slider'),
                 dragHandler: (e) => {
-                    // drag the overlay
                     var overlay = this.viewer.getOverlayById('slider')
                     var delta = this.viewer.viewport.deltaPointsFromPixels(e.delta)
                     overlay.update({ location: overlay.location.plus(delta) })
-                    overlay.drawHTML(this.viewer.overlaysContainer, this.viewer.viewport )
-
+                    overlay.drawHTML(this.viewer.overlaysContainer, this.viewer.viewport)
                     this.updateClip(overlay.location.x)
                 }
             })
@@ -147,10 +144,6 @@ export default {
 
     .openseadragon-canvas:focus {
         outline: none;
-    }
-
-    .overlay {
-        background-color: blue;
     }
 
     #slider {
