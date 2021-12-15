@@ -32,7 +32,7 @@ export default {
             this.$root.$emit('updatedPixelSize', this.pixelSize)
         },
         download() {
-            this.$root.$emit('download', event)
+            this.$root.$emit('download')
         }
     }
 }
