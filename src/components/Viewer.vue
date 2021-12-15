@@ -75,6 +75,7 @@ export default {
                 prefixUrl: '//openseadragon.github.io/openseadragon/images/',
                 crossOriginPolicy: 'Anonymous',
                 visibilityRatio: 0, // disables image from bouncing back
+                defaultZoomLevel: 0.75,
                 overlays: [{
                     id: 'slider'
                 }]
