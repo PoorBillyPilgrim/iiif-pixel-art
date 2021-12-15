@@ -74,6 +74,10 @@ export default {
                 id: 'openseadragon',
                 prefixUrl: '//openseadragon.github.io/openseadragon/images/',
                 crossOriginPolicy: 'Anonymous',
+                visibilityRatio: 0, // disables image from bouncing back
+                wrapHoriztonal: true,
+                panHorizontal: true,
+                defaultZoomLevel: 0.75,
                 overlays: [{
                     id: 'slider'
                 }]
@@ -82,7 +86,7 @@ export default {
         pixelateTiledImage(viewer) {
             
             this.tiledImage = this.viewer.world.getItemAt(0)
-            
+
             // add canvas on which pixelit draws pixelated image
             this.pixelitCanvas.id = 'pixelitcanvas'
             viewer.eventSource.addOverlay({
@@ -106,7 +110,6 @@ export default {
             this.rox = this.tiledImage.viewportToImageCoordinates(0.5).x
             this.initClip()
             this.pixelate()
-
         },
         pixelate() {
             this.pixelImage = new pixelit(this.pixelArtOptions)
