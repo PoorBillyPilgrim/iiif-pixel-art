@@ -2,7 +2,7 @@
     <b-navbar :shadow="true">
         <template #brand>
             <b-navbar-item tag="router-link" :to="{path: '/'}">
-                <img src="../assets/brand-2.png" alt="pixelated thumbnail of The Great Wave" width="75">
+                <img src="../assets/logo.png" alt="pixelated thumbnail of The Great Wave" width="75">
             </b-navbar-item>
         </template>
 
@@ -36,6 +36,5 @@ a {
 
 .navbar-item img {
     max-height: none !important;
-    border-radius: 100%;
 }
 </style>
