@@ -72,7 +72,10 @@ export default {
   },
   mounted: function() {
     // handle when user selects gallery image
-    this.$root.$on('gallery-click', image => {
+    this.$root.$on('gallery-click', image => this.changeViewerImage(image))
+    this.$root.$on('search-select', option => this.changeViewerImage(option))
+    
+    /*this.$root.$on('gallery-click', image => {
       this.loadSlider = false
       this.image.api_id = image.data.id
       this.getImage()
@@ -83,7 +86,7 @@ export default {
       this.loadSlider = false
       this.image.api_id = option.data.id
       this.getImage()
-    })
+    })*/
   },
   computed: {
     urls: function() {
@@ -127,6 +130,11 @@ export default {
       this.image.iiif_id = data.image_id
       this.image.iiif_url = this.$iiif_url + this.image.iiif_id + this.$image_full_size
       this.image.url = this.$iiif_url + this.image.iiif_id +'/info.json'
+    },
+    changeViewerImage(image) {
+      this.loadSlider = false
+      this.image.api_id = image.data.id
+      this.getImage()
     }
   }
 }
