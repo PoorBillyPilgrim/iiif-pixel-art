@@ -1,7 +1,7 @@
 <template>
   <div>
     <Hero class="block"/>
-    <div class="main block">
+    <div class="block">
       <PixelArt />
       <Gallery />
     </div>
