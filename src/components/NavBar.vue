@@ -1,13 +1,13 @@
 <template>
     <b-navbar :shadow="true">
         <template #brand>
-            <b-navbar-item>
+            <b-navbar-item tag="router-link" :to="{path: '/'}">
                 <img src="../assets/brand-2.png" alt="pixelated thumbnail of The Great Wave" width="75">
             </b-navbar-item>
         </template>
 
         <template #end>
-            <b-navbar-item href="#">
+            <b-navbar-item tag="router-link" :to="{path: '/about' }">
                 About
             </b-navbar-item>
             <b-navbar-item tag="a" href="http://api.artic.edu/docs/" target="_blank">
