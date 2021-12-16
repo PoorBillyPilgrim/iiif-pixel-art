@@ -26,13 +26,9 @@
   </div>
 </template>
 <script>
-// vendors
-//import pixelit from '../vendor/pixelit.js'
-// components
 import Viewer from '@/components/Viewer.vue'
 import PixelArtInfo from '@/components/PixelArtInfo.vue'
 import PixelArtOptions from '@/components/PixelArtOptions.vue'
-//import PixelArtSlider from '@/components/PixelArtSlider.vue'
 import PixelArtSearch from '@/components/PixelArtSearch.vue'
 
 export default {
@@ -41,7 +37,6 @@ export default {
     Viewer,
     PixelArtInfo,
     PixelArtOptions,
-    //PixelArtSlider,
     PixelArtSearch
   },
   data() {
@@ -71,22 +66,9 @@ export default {
       window.addEventListener('resize', this.pixelate)
   },
   mounted: function() {
-    // handle when user selects gallery image
+    // change image in viewer based on gallery or search selection
     this.$root.$on('gallery-click', image => this.changeViewerImage(image))
     this.$root.$on('search-select', option => this.changeViewerImage(option))
-    
-    /*this.$root.$on('gallery-click', image => {
-      this.loadSlider = false
-      this.image.api_id = image.data.id
-      this.getImage()
-    })
-    
-    // handle when user selects search result
-    this.$root.$on('search-select', option => {
-      this.loadSlider = false
-      this.image.api_id = option.data.id
-      this.getImage()
-    })*/
   },
   computed: {
     urls: function() {
