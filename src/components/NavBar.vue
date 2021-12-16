@@ -11,7 +11,7 @@
                 About
             </b-navbar-item>
             <b-navbar-item tag="a" href="http://api.artic.edu/docs/" target="_blank">
-                AIC Public API <b-icon class="ml-1" icon="open-in-new" size="is-small"></b-icon>
+                Art Institute of Chicago API <b-icon class="ml-1" icon="open-in-new" size="is-small"></b-icon>
             </b-navbar-item>
             <b-navbar-item tag="a" href="https://github.com/PoorBillyPilgrim/iiif-pixel-art" target="_blank">
                 <b-icon
