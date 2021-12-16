@@ -1,26 +1,16 @@
 <template>
-  <div id="app">
+  <div id="main">
     <NavBar class="mb-3"/>
-    <Hero class="block"/>
-    <div class="main block">
-      <PixelArt />
-      <Gallery />
-    </div>
+    <router-view/>
   </div>
 </template>
 <script>
 import NavBar from '@/components/NavBar.vue'
-import Hero from '@/components/Hero.vue'
-import PixelArt from '@/components/PixelArt.vue'
-import Gallery from '@/components/Gallery.vue'
 
 export default {
   name: 'App',
   components: {
-    NavBar,
-    Hero,
-    PixelArt,
-    Gallery
+    NavBar
   }
 }
 </script>

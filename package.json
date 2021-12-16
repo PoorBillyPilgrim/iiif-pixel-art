@@ -12,7 +12,8 @@
     "core-js": "^3.6.5",
     "lodash": "^4.17.21",
     "openseadragon": "^2.4.2",
-    "vue": "^2.6.11"
+    "vue": "^2.6.11",
+    "vue-router": "^3.5.3"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
@@ -36,8 +37,14 @@
       "parser": "babel-eslint"
     },
     "rules": {
-      "quotes": ["error", "single"],
-      "semi": ["error", "never"]
+      "quotes": [
+        "error",
+        "single"
+      ],
+      "semi": [
+        "error",
+        "never"
+      ]
     }
   },
   "browserslist": [
