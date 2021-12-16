@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import App from './App.vue'
-// add Buefy and Bulma
 import Buefy from 'buefy'
 import 'buefy/dist/buefy.css'
 
