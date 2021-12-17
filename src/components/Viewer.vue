@@ -6,7 +6,6 @@
     </div>
 </template>
 <script>
-// vendors
 import OpenSeadragon from 'openseadragon'
 import pixelit from '../vendor/pixelit.js'
 
