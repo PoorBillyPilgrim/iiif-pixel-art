@@ -10,6 +10,7 @@
   "dependencies": {
     "buefy": "^0.9.8",
     "core-js": "^3.6.5",
+    "dotenv": "^10.0.0",
     "lodash": "^4.17.21",
     "openseadragon": "^2.4.2",
     "vue": "^2.6.11",
@@ -50,7 +51,8 @@
         2
       ],
       "no-multiple-empty-lines": [
-        "error", {
+        "error",
+        {
           "max": 2,
           "maxEOF": 1
         }
