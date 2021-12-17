@@ -156,9 +156,10 @@ export default {
 
     #slider {
         display: block !important;
-        width: 40px; 
-        height: 40px; 
-        background-color: black; 
+        width: 50px; 
+        height: 50px; 
+        background-color: #363636;
+        border: 4px solid #fff; 
         border-radius: 50%; 
         margin-left: -20px; 
         margin-top: -20px;
