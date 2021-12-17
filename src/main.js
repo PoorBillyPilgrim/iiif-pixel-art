@@ -20,7 +20,8 @@ Vue.prototype.$image_thumbnail = '/full/400,/0/default.jpg'
 
 const routes = [
   { path: '/', component: Home },
-  { path: '/about', component: About}
+  { path: '/about', component: About},
+  { path: '*', redirect: '/'}
 ]
 
 const router = new VueRouter({ routes })
