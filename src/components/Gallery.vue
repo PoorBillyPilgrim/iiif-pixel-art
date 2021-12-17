@@ -19,9 +19,9 @@
             <div v-else class="columns">
                 <div v-for="(image, index) in gallery" :key="image.data.id" class="column">
                     <figure class="image">
-                        <a href="#pixelart">
+                        <router-link :to="{path: '/'}">
                             <img @click="replacePixelImage(index)" :src="thumbnail(image)" :alt="image.data.thumbnail.alt_text">
-                        </a>
+                        </router-link>
                     </figure>
                     <p>{{image.data.title}}</p>
                 </div>
@@ -90,6 +90,7 @@ export default {
         },
         replacePixelImage(index) {
             this.$root.$emit('gallery-click', this.gallery[index])
+            window.location.hash = '#'
         }
     }
 }
