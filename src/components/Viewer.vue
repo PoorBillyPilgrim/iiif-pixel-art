@@ -170,7 +170,7 @@ export default {
 
     @media only screen and (min-device-width: 1024px) {
         #openseadragon {
-            height: 600px;
+            height: 800px;
         }
     }
 </style>

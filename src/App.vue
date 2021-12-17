@@ -33,7 +33,7 @@ export default {
 
 @media only screen and (min-device-width: 678px) {
   .main {
-    margin: auto 5rem;
+    margin: auto;
     max-width: 1000px;
   }
 }
