@@ -9,16 +9,16 @@
 
 <script>
 export default {
-    name: 'PixelArtInfo',
-    props: {
-        imageInfo: Object,
-        api_id: Number
-    },
-    computed: {
-        url: function () {
-            return this.$aic_website + this.api_id
-        }
+  name: 'PixelArtInfo',
+  props: {
+    imageInfo: Object,
+    api_id: Number
+  },
+  computed: {
+    url: function () {
+      return this.$aic_website + this.api_id
     }
+  }
 }
 </script>
 

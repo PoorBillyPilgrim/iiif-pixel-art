@@ -32,56 +32,56 @@
 </template>
 
 <script>
-    import debounce from 'lodash/debounce'
-    export default {
-        name: 'PixelArtSearch',
-        data() {
-            return {
-                data: [],
-                selected: null,
-                isFetching: false,
-                term: '',
-                page: 1
-            }
-        },
-        methods: {
-            getSearchResults: debounce(async function (term) {
-                // Search term updated
-                if(this.term !== term) {
-                    this.term = term
-                    this.data = []
-                    this.page = 1
-                }
-                // Search bar cleared
-                if (!term.length) {
-                    this.data = []
-                    this.page = 1
-                    return
-                }
-                this.isFetching = true
-                try {
-                    let res = await fetch(`${this.$api_url}artworks/search?query[term][is_public_domain]=true&limit=10&page=${this.page}&q=${term}`, { headers: { 'AIC-User-Agent': 'iiif-pixel-art (tjjones93@gmail.com)' } })
-                    let { data } = await res.json()
-                    for (let i = 0; i < data.length; i++) {
-                        let res = await fetch(data[i].api_link)
-                        let artwork = await res.json()
-                        this.data.push(artwork)
-                    }
-                    this.page++
-                } catch(err) {
-                    console.error(err)
-                } finally {
-                    this.isFetching = false
-                }
-            }, 500),
-            getNextPage: debounce(function() {
-                this.getSearchResults(this.term)
-            }, 250),
-            handleSelect(option) { 
-                this.$root.$emit('search-select', option)
-            }
-        }
+import debounce from 'lodash/debounce'
+export default {
+  name: 'PixelArtSearch',
+  data() {
+    return {
+      data: [],
+      selected: null,
+      isFetching: false,
+      term: '',
+      page: 1
     }
+  },
+  methods: {
+    getSearchResults: debounce(async function (term) {
+      // Search term updated
+      if(this.term !== term) {
+        this.term = term
+        this.data = []
+        this.page = 1
+      }
+      // Search bar cleared
+      if (!term.length) {
+        this.data = []
+        this.page = 1
+        return
+      }
+      this.isFetching = true
+      try {
+        let res = await fetch(`${this.$api_url}artworks/search?query[term][is_public_domain]=true&limit=10&page=${this.page}&q=${term}`, { headers: { 'AIC-User-Agent': 'iiif-pixel-art (tjjones93@gmail.com)' } })
+        let { data } = await res.json()
+        for (let i = 0; i < data.length; i++) {
+          let res = await fetch(data[i].api_link)
+          let artwork = await res.json()
+          this.data.push(artwork)
+        }
+        this.page++
+      } catch(err) {
+        console.error(err)
+      } finally {
+        this.isFetching = false
+      }
+    }, 500),
+    getNextPage: debounce(function() {
+      this.getSearchResults(this.term)
+    }, 250),
+    handleSelect(option) { 
+      this.$root.$emit('search-select', option)
+    }
+  }
+}
 </script>
 
 <style>

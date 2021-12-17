@@ -21,20 +21,20 @@
 
 <script>
 export default {
-    name: 'PixelArtOptions',
-    data() {
-        return {
-            pixelSize: 25
-        }
-    },
-    methods: {
-        updatePixelSize() {
-            this.$root.$emit('updatedPixelSize', this.pixelSize)
-        },
-        download() {
-            this.$root.$emit('download')
-        }
+  name: 'PixelArtOptions',
+  data() {
+    return {
+      pixelSize: 25
     }
+  },
+  methods: {
+    updatePixelSize() {
+      this.$root.$emit('updatedPixelSize', this.pixelSize)
+    },
+    download() {
+      this.$root.$emit('download')
+    }
+  }
 }
 </script>
 

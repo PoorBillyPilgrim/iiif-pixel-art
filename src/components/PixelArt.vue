@@ -62,8 +62,8 @@ export default {
     }
   },
   created: function() {
-      this.getImage()
-      window.addEventListener('resize', this.pixelate)
+    this.getImage()
+    window.addEventListener('resize', this.pixelate)
   },
   mounted: function() {
     // change image in viewer based on gallery or search selection
@@ -91,8 +91,8 @@ export default {
       fetch(this.$api_url + 'artworks/' + this.image.api_id, { 
         headers: { 
           'AIC-User-Agent': 'iiif-pixel-art (tjjones93@gmail.com)'
-          } 
-        })
+        } 
+      })
         .then(res => res.json())
         .then(data => {
           this.setArtistInfo(data.data)
