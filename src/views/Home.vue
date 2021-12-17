@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main">
     <Hero class="block"/>
     <div class="block">
       <PixelArt />

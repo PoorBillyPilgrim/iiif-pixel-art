@@ -1,7 +1,7 @@
 <template>
   <div id="main">
     <NavBar class="mb-3"/>
-    <router-view class="main"/>
+    <router-view />
   </div>
 </template>
 <script>
@@ -34,7 +34,7 @@ export default {
 @media only screen and (min-device-width: 678px) {
   .main {
     margin: auto;
-    max-width: 1000px;
+    max-width: 2000px;
   }
 }
 </style>
