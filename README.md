@@ -6,6 +6,18 @@
 <p style="opacity: 0.7;" align="center">Seeing the collection through pixels
 </p>
 
+## About
+The [International Image Interoperability Framework (IIIF)](https://iiif.io) is a growing standard in cultural heritage organizations for delivering high-quality digital content. In providing a consistent and efficient method for sharing images online, IIIF provides organizations a robust method for sharing their digital collections. A benefit of IIIF is its flexibiility which lends itself to more creative kinds of uses. With the help of image viewers like [OpenSeadragon](https://openseadragon.github.io/), which this site utilizes, user can encounter unique viewing experiences.
+
+The images provided are all in the public domain and made available through the Art Institute of Chicago's public API which uses IIIF to deliver its images.
+
+This project fetches images from the Art Institute of Chicago using its public API, pixelates the image using [Pixel It](https://giventofly.github.io/pixelit/), and loads both the IIIF image and the pixelated image into the OpenSeadragon viewer.
+
+## Acknowledgments
+[OpenSeadragon](https://openseadragon.github.io/)  
+[IIIF](https://iiif.io)  
+[Pixel It](https://giventofly.github.io/pixelit/)
+
 
 ## Project setup
 ```

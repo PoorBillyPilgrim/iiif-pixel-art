@@ -8,6 +8,7 @@
             With the help of image viewers like <a href="https://openseadragon.github.io/" target="_blank">OpenSeadragon</a>, which this site utilizes, user can encounter unique viewing experiences.
         </p>
         <p class="block">The images provided are all in the public domain and made available through the <a href="http://api.artic.edu/docs/" target="_blank">Art Institute of Chicago's public API</a> which uses IIIF to deliver its images.</p>
+        <p class="block">This project fetches images from the Art Institute of Chicago using its public API, pixelates the image using <a href="http://https://giventofly.github.io/pixelit/" target="_blank">Pixel It</a>, and loads both the IIIF image and the pixelated image into the OpenSeadragon viewer.</p>
     </div>
 </template>
 <script>
