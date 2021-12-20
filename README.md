@@ -1,5 +1,6 @@
 # PixelArt Institute of Chicago
-![Pixelated version of The Great Wave](https://github.com/PoorBillyPilgrim/iiif-pixel-art/blob/gt/src/assets/iiif-pixel-art.gif)
+<img align="center" src="https://github.com/PoorBillyPilgrim/iiif-pixel-art/blob/gt/src/assets/iiif-pixel-art.gif">
+
 > Seeing the collection through pixels
 
 
