@@ -3,8 +3,8 @@
 <img src="https://github.com/PoorBillyPilgrim/iiif-pixel-art/blob/gt/src/assets/iiif-pixel-art.gif" alt="A pixelated version of the painting The Great Wave">
 </p>
 
-<blockquote align="center">Seeing the collection through pixels
-</blockquote>
+<p style="opacity: 0.7;" align="center">Seeing the collection through pixels
+</p>
 
 
 ## Project setup
