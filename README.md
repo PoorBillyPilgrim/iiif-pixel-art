@@ -1,10 +1,10 @@
-# PixelArt Institute of Chicago
+<h1 align="center">Pixel Art Institute of Chicago</h1>
 <p align="center">
 <img src="https://github.com/PoorBillyPilgrim/iiif-pixel-art/blob/gt/src/assets/iiif-pixel-art.gif" alt="A pixelated version of the painting The Great Wave">
 </p>
 
-<p align="center">Seeing the collection through pixels
-</p>
+<blockquote align="center">Seeing the collection through pixels
+</blockquote>
 
 
 ## Project setup
