@@ -2,7 +2,7 @@ module.exports = {
   pages: {
     index: {
       entry: 'src/main.js',
-      title: 'PixelArt Institute of Chicago'
+      title: 'Pixel Art Institute of Chicago'
     }
   },
   publicPath: process.env.NODE_ENV === 'production'

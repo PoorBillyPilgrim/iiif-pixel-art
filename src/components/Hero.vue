@@ -2,7 +2,7 @@
     <section class="hero is-small">
         <div class="hero-body">
             <p class="title">
-                PixelArt Institute of Chicago
+                Pixel Art Institute of Chicago
             </p>
             <p class="subtitle">
                 Seeing the collection through pixels
