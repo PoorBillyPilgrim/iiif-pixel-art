@@ -21,9 +21,7 @@ This project fetches images from the Art Institute of Chicago using its public A
 
 
 ## Project setup
-```
-npm install
-```
+
 
 ### Compiles and hot-reloads for development
 ```
